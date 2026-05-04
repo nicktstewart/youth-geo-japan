@@ -18,7 +18,6 @@ export function SiteHeader() {
               fill
               sizes="44px"
               className="object-contain p-1"
-              priority
             />
           </span>
           <span>Youth GEO Japan</span>

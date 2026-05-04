@@ -34,9 +34,10 @@ export function HeroSection() {
                 src="/YGJ-transparent.png"
                 alt="Youth GEO Japan logo"
                 fill
-                sizes="(max-width: 768px) 90vw, 480px"
+                sizes="(max-width: 767px) calc(100vw - 104px), (max-width: 1023px) 44vw, 480px"
                 className="object-contain"
-                priority
+                loading="eager"
+                fetchPriority="high"
               />
             </div>
           </div>
