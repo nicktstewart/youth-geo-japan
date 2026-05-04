@@ -31,7 +31,7 @@ export function HeroSection() {
           <div className="absolute inset-x-4 top-8 rounded-[2rem] border border-[#6A5748]/12 bg-white p-5 shadow-2xl shadow-[#6A5748]/10">
             <div className="relative aspect-[908/600] overflow-hidden rounded-[1.5rem] bg-white">
               <Image
-                src="/YGJ.jpg"
+                src="/YGJ-transparent.png"
                 alt="Youth GEO Japan logo"
                 fill
                 sizes="(max-width: 768px) 90vw, 480px"
@@ -39,9 +39,6 @@ export function HeroSection() {
                 priority
               />
             </div>
-            <p className="mt-4 text-sm leading-6 text-[#34302F]/72">
-              地図から社会を読み、好奇心から次の道を描く。
-            </p>
           </div>
         </div>
       </div>
