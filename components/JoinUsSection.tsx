@@ -17,8 +17,8 @@ export function JoinUsSection() {
                 {pdfSupplementContent.join.body}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link className="btn-primary" href="/join-us">
-                  Join Us!!
+                <Link className="btn-primary" href="/contact">
+                  Contact
                 </Link>
                 <Link className="btn-secondary" href="/activities">
                   活動を見る

@@ -35,10 +35,10 @@ export function SiteHeader() {
             </Link>
           ))}
           <Link
-            href="/join-us"
+            href="/contact"
             className="ml-2 rounded-full bg-[#6bbc70] px-5 py-2 text-sm font-bold text-[#1f2d1f] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#7dcc82]"
           >
-            Join Us!!
+            Contact
           </Link>
         </nav>
 
@@ -60,10 +60,10 @@ export function SiteHeader() {
               </Link>
             ))}
             <Link
-              href="/join-us"
+              href="/contact"
               className="mt-1 block rounded-xl bg-[#6bbc70] px-4 py-3 text-sm font-bold text-[#1f2d1f]"
             >
-              Join Us!!
+              Contact
             </Link>
           </div>
         </details>

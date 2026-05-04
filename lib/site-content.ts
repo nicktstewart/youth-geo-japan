@@ -2,7 +2,6 @@ export const navItems = [
   { label: "Home", href: "/" },
   { label: "Activities", href: "/activities" },
   { label: "Partners", href: "/partners" },
-  { label: "Contact", href: "/contact" },
 ];
 
 export const siteMeta = {

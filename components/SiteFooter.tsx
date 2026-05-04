@@ -31,7 +31,7 @@ export function SiteFooter() {
           ))}
         </nav>
         <div className="text-sm leading-7 text-white/72">
-          <p>External contact</p>
+          <p>Contact</p>
           <a className="hover:text-white" href={`mailto:${contactInfo.email}`}>
             {contactInfo.email}
           </a>
