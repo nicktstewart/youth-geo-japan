@@ -34,10 +34,21 @@ export const siteColors = {
   primaryYellow: "#F2D06B", // 黄〜薄茶
   accentBrown: "#6A5748", // 茶色アクセント
   white: "#FFFFFF",
-}
+};
 ```
 
+実際の色コードをさっきデザイナーからもらってきました。これが正確なコードです。載っていない色は上記の色を優先してください。
+青
+#a9dbee
+緑
+#6bbc70
+黄
+#f8d478
+白
+#e7eef3
+
 UI方針:
+
 - 背景は白〜生成りを基調
 - CTA・タグ・カード見出しに水色、緑、黄を使う
 - 文字は濃い茶色/黒寄りで読みやすく
@@ -59,12 +70,12 @@ UI方針:
 
 ### 4.2 ページ一覧
 
-| Path | Page | 目的 |
-|---|---|---|
-| `/` | Home | 団体の思想・活動軸・参加導線を伝える |
+| Path          | Page       | 目的                                 |
+| ------------- | ---------- | ------------------------------------ |
+| `/`           | Home       | 団体の思想・活動軸・参加導線を伝える |
 | `/activities` | Activities | 活動実績・今後の活動・勉強会等を掲載 |
-| `/partners` | Partners | 協賛企業・外部協力者・社会人向け導線 |
-| `/contact` | Contact | 参加・問い合わせ・SNS・代表連絡先 |
+| `/partners`   | Partners   | 協賛企業・外部協力者・社会人向け導線 |
+| `/contact`    | Contact    | 参加・問い合わせ・SNS・代表連絡先    |
 
 ## 5. Homeページ仕様
 
@@ -79,6 +90,7 @@ Youth GEO Japan
 ```
 
 推奨UI:
+
 - 左にコピー、右にロゴ/地図・紙飛行機風の抽象イラスト
 - 背景に丸・線・地図グリッドなどの軽いモーション
 - CTAボタン: `Join Us!!` / `活動を見る`
@@ -97,6 +109,7 @@ Youth GEO Japanは、“地理”という現代社会の鍵を握る若者が�
 ```
 
 推奨UI:
+
 - shadcn/ui `Card`
 - 重要語を太字にしすぎない。本文自体は変更しない
 - Fade up animation
@@ -115,6 +128,7 @@ Our Approach:
 ```
 
 推奨UI:
+
 - 2つの横並びカード。Mobileでは縦並び
 - 「循環」を表す円形/ステップ型の簡易ビジュアルを追加
 
@@ -158,6 +172,7 @@ What We Do:
 ```
 
 推奨UI:
+
 - 4つのカードを2x2グリッド
 - Hover時に少し浮く、背景色が淡く変わる
 - アイコン例: Sparkles, Telescope, Wrench, Network
@@ -185,6 +200,7 @@ Youth Geo Japanは、そんな想いから生まれた、地理を愛する若�
 ```
 
 推奨UI:
+
 - Long-form section。最大幅を狭めて読みやすく
 - 途中に地図グリッド/等高線風の背景パターン
 - 最後の一文を強調カードにする。ただし文言は変えない
@@ -248,20 +264,27 @@ const activityCategories = [
   "就職相談",
   "交流会",
   "ビジネスコンテスト",
-]
+];
 ```
 
 ### 6.2 Activity data model
 
 ```ts
 type Activity = {
-  title: string
-  date?: string
-  category: "勉強会" | "ミニプレゼン会" | "フィールドワーク" | "就職相談" | "交流会" | "ビジネスコンテスト" | "その他"
-  description: string
-  image?: string
-  link?: string
-}
+  title: string;
+  date?: string;
+  category:
+    | "勉強会"
+    | "ミニプレゼン会"
+    | "フィールドワーク"
+    | "就職相談"
+    | "交流会"
+    | "ビジネスコンテスト"
+    | "その他";
+  description: string;
+  image?: string;
+  link?: string;
+};
 ```
 
 初期プレースホルダー:
@@ -271,9 +294,10 @@ const activities: Activity[] = [
   {
     title: "活動実績を追加予定",
     category: "その他",
-    description: "今後、勉強会・交流会・フィールドワークなどの活動実績を掲載します。",
+    description:
+      "今後、勉強会・交流会・フィールドワークなどの活動実績を掲載します。",
   },
-]
+];
 ```
 
 ### 6.3 UI
@@ -305,11 +329,26 @@ Wix本文をベースに、文言を崩さず文脈化する:
 
 ```ts
 const partnerOptions = [
-  { title: "講演・イベント登壇", description: "若者が進学・仕事・社会課題とのつながりを考える機会を提供します。" },
-  { title: "勉強会・ハッカソン協力", description: "GISをはじめとする地理のツールを活用し、アイデアを形にする体験を支えます。" },
-  { title: "キャリア相談・メンタリング", description: "地理への好奇心から将来の道を描ける環境づくりに協力いただきます。" },
-  { title: "協賛・共同企画", description: "Youth GEO Japanの活動継続と拡大を支援いただきます。" },
-]
+  {
+    title: "講演・イベント登壇",
+    description:
+      "若者が進学・仕事・社会課題とのつながりを考える機会を提供します。",
+  },
+  {
+    title: "勉強会・ハッカソン協力",
+    description:
+      "GISをはじめとする地理のツールを活用し、アイデアを形にする体験を支えます。",
+  },
+  {
+    title: "キャリア相談・メンタリング",
+    description:
+      "地理への好奇心から将来の道を描ける環境づくりに協力いただきます。",
+  },
+  {
+    title: "協賛・共同企画",
+    description: "Youth GEO Japanの活動継続と拡大を支援いただきます。",
+  },
+];
 ```
 
 ### 7.4 UI
@@ -358,7 +397,7 @@ const contactInfo = {
   xUrl: "", // 後で追加
   instagramUrl: "", // 後で追加
   linkedinUrl: "", // 後で追加
-}
+};
 ```
 
 ### 8.3 UI
@@ -382,6 +421,7 @@ PDF補足情報としてHomeまたはContact下部に掲載可能。
 ```
 
 UI:
+
 - 個人名は出さず、属性カードとして表示
 - ポップだが過度にカジュアルになりすぎない
 
@@ -436,8 +476,9 @@ UI:
 ```ts
 export const metadata = {
   title: "Youth GEO Japan | 好奇心を、まっすぐ未来へ。",
-  description: "Youth GEO Japanは、地理への好奇心を軸に、若者が自由に挑戦し、学び合うコミュニティです。",
-}
+  description:
+    "Youth GEO Japanは、地理への好奇心を軸に、若者が自由に挑戦し、学び合うコミュニティです。",
+};
 ```
 
 ## 14. 初期実装の完了条件
