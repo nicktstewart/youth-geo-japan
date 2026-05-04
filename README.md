@@ -1,36 +1,142 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Youth GEO Japan Website
 
-## Getting Started
+Youth GEO Japan の公式サイトです。地理・GIS・都市や地域の課題に関心を持つ若者が、学び合い、活動し、企業・団体・社会人とつながるための情報発信サイトとして作られています。
 
-First, run the development server:
+このリポジトリは、Next.js / React / TypeScript で作られた静的な Web サイトです。文章や活動情報の多くは `lib/site-content.ts` にまとめられているので、初心者でも小さな修正から Pull Request を出しやすい構成になっています。
+
+## はじめに
+
+必要なもの:
+
+- Node.js
+- npm
+- Git
+- GitHub アカウント
+
+初回だけ依存パッケージをインストールします。
+
+```bash
+npm install
+```
+
+開発サーバーを起動します。
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ブラウザで http://localhost:3000 を開くとサイトを確認できます。変更したファイルは自動で反映されます。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## よく使うコマンド
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev
+```
 
-## Learn More
+開発用サーバーを起動します。
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run lint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+コードの書き方に問題がないか確認します。Pull Request を出す前に実行してください。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run build
+```
 
-## Deploy on Vercel
+本番用にビルドできるか確認します。大きめの変更をした場合は実行してください。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## プロジェクト構成
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+app/
+  layout.tsx            全ページ共通のレイアウト、ヘッダー、フッター、メタデータ
+  page.tsx              Home ページ
+  activities/page.tsx   Activities ページ
+  partners/page.tsx     Partners ページ
+  contact/page.tsx      Contact ページ
+  globals.css           全体の CSS と Tailwind CSS の設定
+
+components/
+  SiteHeader.tsx        ヘッダー
+  SiteFooter.tsx        フッター
+  HeroSection.tsx       Home のヒーロー部分
+  ...                   各セクション用コンポーネント
+
+lib/
+  site-content.ts       サイト上の文章、活動情報、連絡先など
+  site-colors.ts        サイトの基本カラー
+
+public/
+  YGJ-logo-only.png     ロゴ画像
+  YGJ-transparent.png   ヒーローで使うロゴ画像
+```
+
+## 初心者におすすめの修正場所
+
+文章を直す場合:
+
+- まず `lib/site-content.ts` を見てください。
+- ページ内に直接書かれている文言も少しあります。その場合は `app/` または `components/` の該当ファイルを修正します。
+
+画像を差し替える場合:
+
+- 画像ファイルは `public/` に置きます。
+- 例: `public/example.png` は、コード上では `/example.png` として参照できます。
+
+ページの見た目を直す場合:
+
+- 共通スタイルは `app/globals.css` にあります。
+- 各パーツの細かい見た目は `components/` の `className` を調整します。
+
+## Pull Request の出し方
+
+基本の流れ:
+
+1. GitHub でこのリポジトリを fork します。
+2. 自分の PC に clone します。
+3. 作業用ブランチを作ります。
+
+```bash
+git checkout -b fix/readme-example
+```
+
+4. ファイルを編集します。
+5. `npm run lint` を実行します。
+6. 変更を commit します。
+
+```bash
+git add .
+git commit -m "Update contributor docs"
+```
+
+7. GitHub に push します。
+
+```bash
+git push origin fix/readme-example
+```
+
+8. GitHub 上で Pull Request を作ります。
+
+公式ドキュメント:
+
+- GitHub Docs: [フォークから Pull Request を作成する](https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)
+- GitHub Docs: [Pull Request について](https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)
+
+## 開発時の注意
+
+- このプロジェクトは Next.js `16.2.4` を使っています。古い Next.js の記事と違う場合があります。
+- このリポジトリには `AGENTS.md` の注意書きがあります。Next.js の仕様を確認するときは、必要に応じて `node_modules/next/dist/docs/` のローカルドキュメントも見てください。
+- 日本語本文を修正するときは、文字化けしていないかブラウザで確認してください。
+- 画像にはできるだけ `alt` を設定してください。装飾だけの画像は `alt=""` で問題ありません。
+
+Next.js の学習に使える公式リンク:
+
+- [Next.js Docs](https://nextjs.org/docs)
+- [Learn Next.js](https://nextjs.org/learn)
+- [Next.js App Router](https://nextjs.org/docs/app)
+
+## 参考仕様
+
+サイトの目的、ページ構成、実装方針は [youth_geo_japan_website_spec.md](./youth_geo_japan_website_spec.md) にまとめています。大きな変更をする場合は、コードと一緒にこの仕様も更新してください。
