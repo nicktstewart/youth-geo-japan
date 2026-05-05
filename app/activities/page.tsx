@@ -26,8 +26,8 @@ export default function ActivitiesPage() {
                 </span>
               </div>
               {activity.date ? <span className="badge">{activity.date}</span> : null}
-              <h2 className="mt-4 text-2xl font-black text-[#34302F]">{activity.title}</h2>
-              <p className="mt-3 text-base leading-8 text-[#34302F]/76">
+              <h2 className="mt-4 text-2xl font-black text-[#3e3a39]">{activity.title}</h2>
+              <p className="mt-3 text-base leading-8 text-[#3e3a39]/76">
                 {activity.description}
               </p>
               {activity.link ? (

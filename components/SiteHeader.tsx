@@ -8,7 +8,7 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex items-center gap-3 font-semibold text-[#34302F]"
+          className="flex items-center gap-3 font-semibold text-[#3e3a39]"
           aria-label="Youth GEO Japan home"
         >
           <span className="relative size-11 overflow-hidden rounded-xl border border-[#6A5748]/15 bg-white shadow-sm">
@@ -28,7 +28,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-full px-4 py-2 text-sm font-medium text-[#34302F]/78 transition hover:bg-white hover:text-[#34302F]"
+              className="rounded-full px-4 py-2 text-sm font-medium text-[#3e3a39]/78 transition hover:bg-white hover:text-[#3e3a39]"
             >
               {item.label}
             </Link>
@@ -43,7 +43,7 @@ export function SiteHeader() {
 
         <details className="relative md:hidden">
           <summary
-            className="grid size-11 cursor-pointer list-none place-items-center rounded-full border border-[#6A5748]/15 bg-white text-[#34302F] shadow-sm [&::-webkit-details-marker]:hidden"
+            className="grid size-11 cursor-pointer list-none place-items-center rounded-full border border-[#6A5748]/15 bg-white text-[#3e3a39] shadow-sm [&::-webkit-details-marker]:hidden"
             aria-label="Open navigation"
           >
             <span className="hamburger" aria-hidden="true" />
@@ -53,7 +53,7 @@ export function SiteHeader() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="block rounded-xl px-4 py-3 text-sm font-medium text-[#34302F] hover:bg-[#F7F3ED]"
+                className="block rounded-xl px-4 py-3 text-sm font-medium text-[#3e3a39] hover:bg-[#F7F3ED]"
               >
                 {item.label}
               </Link>

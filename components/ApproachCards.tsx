@@ -16,10 +16,10 @@ export function ApproachCards() {
       <div className="grid gap-5">
         {homeContent.approach.items.map((item, index) => (
           <article key={item} className="card-soft">
-            <span className="mb-4 inline-grid size-10 place-items-center rounded-full bg-[#a9dbee] text-sm font-black text-[#34302F]">
+            <span className="mb-4 inline-grid size-10 place-items-center rounded-full bg-[#a9dbee] text-sm font-black text-[#3e3a39]">
               {index + 1}
             </span>
-            <p className="text-lg leading-8 text-[#34302F]">{item}</p>
+            <p className="text-lg leading-8 text-[#3e3a39]">{item}</p>
           </article>
         ))}
       </div>

@@ -25,10 +25,10 @@ export default function PartnersPage() {
             </Link>
           </div>
           <aside className="card-soft bg-white">
-            <h2 className="text-xl font-black text-[#34302F]">対象者</h2>
+            <h2 className="text-xl font-black text-[#3e3a39]">対象者</h2>
             <ul className="mt-5 space-y-4">
               {partnerAudiences.map((audience) => (
-                <li key={audience} className="flex gap-3 text-base leading-7 text-[#34302F]/76">
+                <li key={audience} className="flex gap-3 text-base leading-7 text-[#3e3a39]/76">
                   <span className="mt-2 size-2 shrink-0 rounded-full bg-[#6bbc70]" />
                   <span>{audience}</span>
                 </li>

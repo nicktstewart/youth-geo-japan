@@ -4,7 +4,7 @@ import { contactInfo, navItems, siteMeta } from "@/lib/site-content";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-[#6A5748]/10 bg-[#34302F] text-white">
+    <footer className="border-t border-[#6A5748]/10 bg-[#3e3a39] text-white">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
         <div>
           <div className="flex items-center gap-3">

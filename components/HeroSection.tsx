@@ -12,10 +12,10 @@ export function HeroSection() {
           <p className="mb-5 inline-flex rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#6A5748] shadow-sm">
             Youth network for geography and GIS
           </p>
-          <h1 className="text-5xl font-black leading-[1.03] text-[#34302F] sm:text-6xl lg:text-7xl">
+          <h1 className="text-5xl font-black leading-[1.03] text-[#3e3a39] sm:text-6xl lg:text-7xl">
             {siteMeta.name}
           </h1>
-          <p className="mt-6 text-2xl font-semibold leading-relaxed text-[#34302F]/82 sm:text-3xl">
+          <p className="mt-6 text-2xl font-semibold leading-relaxed text-[#3e3a39]/82 sm:text-3xl">
             {siteMeta.tagline}
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">

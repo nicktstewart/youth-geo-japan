@@ -25,7 +25,7 @@ export default function Home() {
               eyebrow={homeContent.vision.eyebrow}
               title={homeContent.vision.title}
             />
-            <div className="mt-7 space-y-4 text-lg leading-9 text-[#34302F]/78">
+            <div className="mt-7 space-y-4 text-lg leading-9 text-[#3e3a39]/78">
               {homeContent.vision.body.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}

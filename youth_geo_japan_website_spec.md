@@ -94,7 +94,7 @@ public/
 ```ts
 export const siteColors = {
   background: "#F7F3ED",
-  foreground: "#34302F",
+  foreground: "#3e3a39",
   primaryBlue: "#a9dbee",
   primaryGreen: "#6bbc70",
   primaryYellow: "#f8d478",

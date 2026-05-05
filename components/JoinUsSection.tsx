@@ -13,7 +13,7 @@ export function JoinUsSection() {
                 eyebrow="Join Us!!"
                 title={`${pdfSupplementContent.join.title} ${pdfSupplementContent.join.subtitle}`}
               />
-              <p className="mt-7 text-base leading-8 text-[#34302F]/78">
+              <p className="mt-7 text-base leading-8 text-[#3e3a39]/78">
                 {pdfSupplementContent.join.body}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">

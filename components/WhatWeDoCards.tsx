@@ -10,7 +10,7 @@ export function WhatWeDoCards() {
         <article key={card.title} className="card-hover group">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h3 className="text-2xl font-black text-[#34302F]">{card.title}</h3>
+              <h3 className="text-2xl font-black text-[#3e3a39]">{card.title}</h3>
               <p className="mt-2 font-semibold text-[#6A5748]">{card.subtitle}</p>
             </div>
             <span
@@ -21,7 +21,7 @@ export function WhatWeDoCards() {
               {icons[index]}
             </span>
           </div>
-          <p className="mt-6 text-base leading-8 text-[#34302F]/76">{card.description}</p>
+          <p className="mt-6 text-base leading-8 text-[#3e3a39]/76">{card.description}</p>
         </article>
       ))}
     </div>

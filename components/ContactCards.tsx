@@ -4,10 +4,10 @@ export function ContactCards() {
   return (
     <article className="card-soft max-w-4xl bg-white">
       <p className="badge w-fit">Email contact</p>
-      <h2 className="mt-5 text-2xl font-black text-[#34302F]">
+      <h2 className="mt-5 text-2xl font-black text-[#3e3a39]">
         参加・協力・問い合わせ
       </h2>
-      <div className="mt-4 space-y-4 text-base leading-8 text-[#34302F]/76">
+      <div className="mt-4 space-y-4 text-base leading-8 text-[#3e3a39]/76">
         <p>
           Youth GEO Japanで一緒に活動してみたい方、地理やGISに関心がありコミュニティの様子を知りたい方は、メールでお気軽にご連絡ください。
         </p>
