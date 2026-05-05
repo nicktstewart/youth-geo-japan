@@ -22,6 +22,8 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   margin: 0;
   background: var(--background);
@@ -29,6 +31,16 @@ body {
   font-family:
     "Hiragino Sans", "Yu Gothic", "Yu Gothic UI", Meiryo, system-ui,
     sans-serif;
+}
+
+main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+main > section:only-child {
+  flex: 1;
 }
 
 a {
