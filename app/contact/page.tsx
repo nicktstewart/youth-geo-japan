@@ -16,7 +16,7 @@ export default function ContactPage() {
         <SectionHeading
           eyebrow="Contact"
           title="参加・協力・問い合わせ"
-          description="メンバーとして参加してみたい方も、外部から協力・取材・共同企画を相談したい方も、まずはメールでご連絡ください。"
+          description="メンバーとして参加してみたい方も、外部から協力・取材・共同企画を相談したい方も、まずはお気軽にご連絡ください。"
         />
         <div className="mt-8">
           <ContactCards />

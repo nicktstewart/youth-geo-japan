@@ -177,6 +177,8 @@ export const partnerOptions = [
 
 export const contactInfo = {
   email: "contact@youthgeojp.com",
+  lineOpenChatUrl:
+    "https://line.me/ti/g2/mE9lbLlg3tsPsex_QvgZl77WnKGEhQEV9Rvl9w",
   lineQrImage: "/line-qr.png",
   discordInviteUrl: "",
   xUrl: "",

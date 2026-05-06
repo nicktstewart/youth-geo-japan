@@ -89,6 +89,56 @@ a {
   color: #3e3a39;
 }
 
+.btn-line {
+  position: relative;
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #06c755;
+  padding-inline: 1.35rem;
+  color: #ffffff;
+  font-weight: 800;
+  transition: transform 180ms ease;
+}
+
+.btn-line::before {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  content: "";
+}
+
+.btn-line:hover {
+  transform: translateY(-2px) scale(1.01);
+}
+
+.btn-line:hover::before {
+  background: rgb(0 0 0 / 10%);
+}
+
+.btn-line:active::before {
+  background: rgb(0 0 0 / 30%);
+}
+
+.btn-line[aria-disabled="true"] {
+  border: 1px solid rgb(229 229 229 / 60%);
+  background: #ffffff;
+  color: rgb(30 30 30 / 20%);
+  pointer-events: none;
+}
+
+.btn-line[aria-disabled="true"]::before {
+  display: none;
+}
+
+.btn-line > span {
+  position: relative;
+  z-index: 1;
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
