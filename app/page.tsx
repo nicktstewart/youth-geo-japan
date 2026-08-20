@@ -19,13 +19,13 @@ export default function Home() {
       <HeroSection />
 
       <section className="section-pad bg-white">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <article className="card-soft mx-auto max-w-4xl bg-[#F7F3ED]">
+        <div className="page-shell">
+          <article className="max-w-4xl">
             <SectionHeading
               eyebrow={homeContent.vision.eyebrow}
               title={homeContent.vision.title}
             />
-            <div className="mt-7 space-y-4 text-lg leading-9 text-[#3e3a39]/78">
+            <div className="mt-7 space-y-4 border-l-2 border-[#6bbc70] pl-6 text-lg leading-9 text-[#3e3a39]/78 sm:pl-8">
               {homeContent.vision.body.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -35,7 +35,7 @@ export default function Home() {
       </section>
 
       <section className="section-pad bg-[#F7F3ED]">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="page-shell">
           <SectionHeading
             eyebrow={homeContent.approach.eyebrow}
             title={homeContent.approach.title}
@@ -47,7 +47,7 @@ export default function Home() {
       </section>
 
       <section className="section-pad bg-white">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="page-shell">
           <SectionHeading
             eyebrow={homeContent.whatWeDo.eyebrow}
             title={homeContent.whatWeDo.title}

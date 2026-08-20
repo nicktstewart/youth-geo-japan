@@ -13,10 +13,11 @@ export default function PartnersPage() {
   return (
     <>
       <section className="section-pad bg-[#F7F3ED]">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_0.85fr] lg:px-8">
+        <div className="page-shell grid gap-10 lg:grid-cols-[1fr_0.85fr]">
           <div>
             <SectionHeading
               eyebrow="Partners"
+              as="h1"
               title="地理への好奇心から、将来の道を描ける環境をともにつくる"
               description={partnerHeroCopy}
             />
@@ -25,7 +26,7 @@ export default function PartnersPage() {
             </Link>
           </div>
           <aside className="card-soft bg-white">
-            <h2 className="text-xl font-black text-[#3e3a39]">対象者</h2>
+            <h2 className="text-xl font-semibold text-[#3e3a39]">対象者</h2>
             <ul className="mt-5 space-y-4">
               {partnerAudiences.map((audience) => (
                 <li key={audience} className="flex gap-3 text-base leading-7 text-[#3e3a39]/76">
@@ -39,7 +40,7 @@ export default function PartnersPage() {
       </section>
 
       <section className="section-pad bg-white">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="page-shell">
           <SectionHeading eyebrow="Collaboration" title="協力メニュー" />
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {partnerOptions.map((option) => (

@@ -12,9 +12,10 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <section className="section-pad bg-[#F7F3ED]">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="page-shell">
         <SectionHeading
           eyebrow="Contact"
+          as="h1"
           title="参加・協力・問い合わせ"
           description="メンバーとして参加してみたい方も、外部から協力・取材・共同企画を相談したい方も、まずはお気軽にご連絡ください。"
         />

@@ -5,7 +5,7 @@ import { contactInfo, navItems, siteMeta } from "@/lib/site-content";
 export function SiteFooter() {
   return (
     <footer className="border-t border-[#6A5748]/10 bg-[#3e3a39] text-white">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
+      <div className="page-shell grid gap-8 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-3">
             <span className="relative size-12 overflow-hidden rounded-xl bg-white/95">
@@ -17,7 +17,7 @@ export function SiteFooter() {
                 className="object-contain p-1"
               />
             </span>
-            <p className="text-xl font-bold">{siteMeta.name}</p>
+            <p className="text-xl font-semibold">{siteMeta.name}</p>
           </div>
           <p className="mt-3 max-w-sm text-sm leading-7 text-white/72">
             {siteMeta.tagline}

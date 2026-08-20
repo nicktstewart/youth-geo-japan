@@ -16,7 +16,7 @@ export function StorySection() {
           ))}
         </div>
         {finalParagraph ? (
-          <p className="mt-8 rounded-2xl border border-[#6A5748]/10 bg-[#F7F3ED] p-6 text-xl font-bold leading-9 text-[#3e3a39] shadow-sm">
+          <p className="mt-8 rounded-2xl border border-[#6A5748]/10 bg-[#F7F3ED] p-6 text-xl font-semibold leading-9 text-[#3e3a39] shadow-sm">
             {finalParagraph}
           </p>
         ) : null}

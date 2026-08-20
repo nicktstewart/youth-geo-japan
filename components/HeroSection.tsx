@@ -7,15 +7,15 @@ export function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-[#F7F3ED]">
       <AnimatedBlob />
-      <div className="relative mx-auto grid min-h-[calc(100svh-68px)] max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 md:grid-cols-[1fr_0.92fr] lg:px-8">
+      <div className="page-shell relative grid min-h-[calc(100svh-68px)] items-center gap-12 py-16 md:grid-cols-[1fr_0.92fr] md:py-20">
         <div className="fade-up max-w-2xl">
           <p className="mb-5 inline-flex rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#6A5748] shadow-sm">
             Youth network for geography and GIS
           </p>
-          <h1 className="text-5xl font-black leading-[1.03] text-[#3e3a39] sm:text-6xl lg:text-7xl">
+          <h1 className="text-5xl font-semibold leading-[1.08] tracking-[-0.04em] text-[#3e3a39] sm:text-6xl lg:text-7xl">
             {siteMeta.name}
           </h1>
-          <p className="mt-6 text-2xl font-semibold leading-relaxed text-[#3e3a39]/82 sm:text-3xl">
+          <p className="mt-6 text-2xl font-medium leading-relaxed text-[#3e3a39]/82 sm:text-3xl">
             {siteMeta.tagline}
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -28,18 +28,16 @@ export function HeroSection() {
           </div>
         </div>
         <div className="relative min-h-[340px]">
-          <div className="absolute inset-x-4 top-8 rounded-[2rem] border border-[#6A5748]/12 bg-white p-5 shadow-2xl shadow-[#6A5748]/10">
-            <div className="relative aspect-[908/600] overflow-hidden rounded-[1.5rem] bg-white">
-              <Image
-                src="/YGJ-transparent.png"
-                alt="Youth GEO Japan logo"
-                fill
-                sizes="(max-width: 767px) calc(100vw - 104px), (max-width: 1023px) 44vw, 480px"
-                className="object-contain"
-                loading="eager"
-                fetchPriority="high"
-              />
-            </div>
+          <div className="absolute inset-4">
+            <Image
+              src="/YGJ-logo-only.png"
+              alt="Youth GEO Japan logo"
+              fill
+              sizes="(max-width: 767px) calc(100vw - 64px), (max-width: 1023px) 44vw, 440px"
+              className="object-contain drop-shadow-[0_18px_30px_rgb(106_87_72_/_0.12)]"
+              loading="eager"
+              fetchPriority="high"
+            />
           </div>
         </div>
       </div>

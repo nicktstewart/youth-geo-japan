@@ -30,7 +30,7 @@ export const homeContent = {
   },
   whatWeDo: {
     eyebrow: "What We Do:",
-    title: "知る／考える／形にする／繋がる",
+    title: "知る、考える、形にする、繋がる",
     cards: [
       {
         title: "知る",
@@ -108,12 +108,62 @@ export type Activity = {
 
 export const activities: Activity[] = [
   {
-    title: "活動実績を追加予定",
+    title: "2026年8月 ニュースレター",
+    date: "2026.08",
     category: "その他",
     description:
-      "今後、勉強会・交流会・フィールドワークなどの活動実績を掲載します。",
+      "コンテストに向けたミーティング、イベント参加、LT会、交流の様子をまとめました。",
+    link: "#newsletter-2026-08",
   },
 ];
+
+export const augustNewsletter = {
+  issue: "2026.08",
+  title: "Youth GEO Japan ニュースレター",
+  lead: [
+    "こんにちは、Youth GEO Japanです。私たちは、地理空間情報に興味のある若者が集まり、学びや挑戦を共有するコミュニティです。",
+    "8月号では、最近のミーティングや勉強会、イベント参加、メンバー同士の交流についてお届けします。",
+  ],
+  topics: [
+    {
+      title: "コンテストに向けたミーティング",
+      paragraphs: [
+        "国土地理院のGeoアクティビティコンテストや、国土交通省のPLATEAU AWARD 2026など、地理空間情報を活用したコンテストについて情報を共有しています。",
+        "Youth GEO Japanでもメンバーが集まり、参加に向けたアイデアや今後の進め方についてミーティングを行いました。具体的な内容は検討を重ねながら、少しずつ形にしていきます。",
+      ],
+    },
+    {
+      title: "イベント参加・情報共有",
+      paragraphs: [
+        "コミュニティ内では、GISや地理空間情報に関するイベントを紹介し合い、参加したメンバーの学びを共有しています。",
+      ],
+      items: [
+        "GISA若手分科会研究会への参加",
+        "Cesium Developer Day Japan 2026の情報共有",
+        "FOSS4G 2026 Hiroshimaの参加・運営情報の案内",
+        "G空間EXPOなどの展示会への参加",
+      ],
+    },
+    {
+      title: "勉強会・LT会",
+      paragraphs: [
+        "内部LT会の第1回・第2回を開催し、メンバーそれぞれの関心を起点に発表とディスカッションを行いました。",
+        "座標系、ネットワーク分析、3D GIS・GeoAI、スポンジシティ、関係人口、街づくりゲームなどを、今後のテーマ候補として話し合っています。",
+      ],
+    },
+    {
+      title: "オフ会・交流",
+      paragraphs: [
+        "5月には対面のオフ会を開催しました。次回は9月の開催を予定しています。Discordでも日々の情報交換や企画の相談を行っています。",
+      ],
+    },
+  ],
+  upcoming: [
+    "コンテストに向けたミーティング・作業会",
+    "勉強会・LT会の継続開催",
+    "9月のオフ会開催",
+  ],
+};
 
 export const pdfSupplementContent = {
   join: {

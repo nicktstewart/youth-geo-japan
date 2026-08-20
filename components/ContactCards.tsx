@@ -5,7 +5,7 @@ export function ContactCards() {
     <div className="grid max-w-5xl gap-5 lg:grid-cols-[1.1fr_0.9fr]">
       <article className="card-soft flex flex-col bg-white">
         <p className="badge w-fit">Email contact</p>
-        <h2 className="mt-5 text-2xl font-black text-[#3e3a39]">
+        <h2 className="mt-5 text-2xl font-semibold text-[#3e3a39]">
           参加・協力・問い合わせ
         </h2>
         <div className="mt-4 space-y-4 text-base leading-8 text-[#3e3a39]/76">
@@ -29,7 +29,7 @@ export function ContactCards() {
 
       <article className="card-soft flex flex-col bg-[#EAF7EC]">
         <p className="badge w-fit">LINE open chat</p>
-        <h2 className="mt-5 text-2xl font-black text-[#3e3a39]">
+        <h2 className="mt-5 text-2xl font-semibold text-[#3e3a39]">
           活動情報を受け取る
         </h2>
         <div className="mt-4 space-y-4 text-base leading-8 text-[#3e3a39]/76">

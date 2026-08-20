@@ -3,8 +3,8 @@ import { pdfSupplementContent } from "@/lib/site-content";
 export function MemberCards() {
   return (
     <section className="section-pad bg-white">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-black text-[#3e3a39]">
+      <div className="page-shell">
+        <h2 className="text-3xl font-semibold tracking-[-0.02em] text-[#3e3a39]">
           {pdfSupplementContent.members.title}
         </h2>
         <div className="mt-7 grid gap-4 md:grid-cols-2">

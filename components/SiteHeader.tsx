@@ -5,7 +5,7 @@ import { navItems } from "@/lib/site-content";
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#6A5748]/10 bg-[#F7F3ED]/92 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+      <div className="page-shell flex items-center justify-between py-3">
         <Link
           href="/"
           className="flex items-center gap-3 font-semibold text-[#3e3a39]"
@@ -35,7 +35,7 @@ export function SiteHeader() {
           ))}
           <Link
             href="/contact"
-            className="ml-2 rounded-full bg-[#6bbc70] px-5 py-2 text-sm font-bold text-[#1f2d1f] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#7dcc82]"
+            className="ml-2 rounded-full bg-[#6bbc70] px-5 py-2 text-sm font-semibold text-[#1f2d1f] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#7dcc82]"
           >
             Contact
           </Link>
@@ -60,7 +60,7 @@ export function SiteHeader() {
             ))}
             <Link
               href="/contact"
-              className="mt-1 block rounded-xl bg-[#6bbc70] px-4 py-3 text-sm font-bold text-[#1f2d1f]"
+              className="mt-1 block rounded-xl bg-[#6bbc70] px-4 py-3 text-sm font-semibold text-[#1f2d1f]"
             >
               Contact
             </Link>

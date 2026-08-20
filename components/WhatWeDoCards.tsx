@@ -10,8 +10,8 @@ export function WhatWeDoCards() {
         <article key={card.title} className="card-hover group">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h3 className="text-2xl font-black text-[#3e3a39]">{card.title}</h3>
-              <p className="mt-2 font-semibold text-[#6A5748]">{card.subtitle}</p>
+              <h3 className="text-2xl font-semibold text-[#3e3a39]">{card.title}</h3>
+              <p className="mt-2 font-medium text-[#6A5748]">{card.subtitle}</p>
             </div>
             <span
               className="grid size-12 shrink-0 place-items-center rounded-full border border-[#6A5748]/10 text-xl"
