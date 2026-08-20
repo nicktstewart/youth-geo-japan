@@ -12,7 +12,7 @@ export function HeroSection() {
           <p className="mb-5 inline-flex rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#6A5748] shadow-sm">
             Youth network for geography and GIS
           </p>
-          <h1 className="text-5xl font-semibold leading-[1.08] tracking-[-0.04em] text-[#3e3a39] sm:text-6xl lg:text-7xl">
+          <h1 className="whitespace-nowrap text-[clamp(2.15rem,5.5vw,4.5rem)] font-semibold leading-[1.08] tracking-[-0.04em] text-[#3e3a39]">
             {siteMeta.name}
           </h1>
           <p className="mt-6 text-2xl font-medium leading-relaxed text-[#3e3a39]/82 sm:text-3xl">
