@@ -22,10 +22,6 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/hibakujumoku",
-        destination: "/hibakujumoku/index.html",
-      },
-      {
         source: "/hibakujumoku/",
         destination: "/hibakujumoku/index.html",
       },
