@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Verified third-party/static delivery artifact; linted in its source project.
+    "public/hibakujumoku/**",
   ]),
 ]);
 
