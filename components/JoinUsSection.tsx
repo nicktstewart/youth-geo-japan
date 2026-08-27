@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/SectionHeading";
-import { pdfSupplementContent } from "@/lib/site-content";
+import { getDictionary, localePath, type Locale } from "@/lib/i18n";
 
-export function JoinUsSection() {
+export function JoinUsSection({ locale }: { locale: Locale }) {
+  const { pdfSupplementContent, ui } = getDictionary(locale);
+
   return (
     <section className="section-pad bg-[#F7F3ED]">
       <div className="page-shell">
@@ -17,11 +19,11 @@ export function JoinUsSection() {
                 {pdfSupplementContent.join.body}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link className="btn-primary" href="/contact">
+                <Link className="btn-primary" href={localePath(locale, "/contact")}>
                   Contact
                 </Link>
-                <Link className="btn-secondary" href="/activities">
-                  活動を見る
+                <Link className="btn-secondary" href={localePath(locale, "/activities")}>
+                  {ui.viewActivities}
                 </Link>
               </div>
             </div>

@@ -1,29 +1,38 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { SectionHeading } from "@/components/SectionHeading";
-import { activities, augustNewsletter, siteMeta } from "@/lib/site-content";
+import { getDictionary, hasLocale, localePath } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: `Activities | ${siteMeta.name}`,
-  description: "Youth GEO Japanの活動実績・予定を掲載します。",
-};
+type ActivitiesPageProps = { params: Promise<{ lang: string }> };
 
-export default function ActivitiesPage() {
+export async function generateMetadata({ params }: ActivitiesPageProps): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const { siteMeta, ui } = getDictionary(lang);
+  return { title: `Activities | ${siteMeta.name}`, description: ui.activitiesPageDescription };
+}
+
+export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const { activities, augustNewsletter, ui } = getDictionary(lang);
+
   return (
     <>
       <section className="section-pad bg-[#F7F3ED]">
         <div className="page-shell grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
           <SectionHeading
             eyebrow="Activities"
-            title="活動の記録"
-            description="勉強会やイベント、メンバー同士の交流など、Youth GEO Japanの歩みを月ごとにお届けします。"
+            title={ui.activitiesPageTitle}
+            description={ui.activitiesPageDescription}
             as="h1"
           />
           <div className="rounded-[1.25rem] border border-[#6A5748]/10 bg-white p-5 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6A5748]">
               Newsletter archive
             </p>
-            <h2 className="mt-2 text-lg font-semibold text-[#3e3a39]">記事一覧</h2>
+            <h2 className="mt-2 text-lg font-semibold text-[#3e3a39]">{ui.articleList}</h2>
             <div className="mt-4 grid gap-2">
               {activities.map((activity) =>
                 activity.link ? (
@@ -110,7 +119,9 @@ export default function ActivitiesPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6A5748]">
                 Coming up
               </p>
-              <h3 className="mt-3 text-2xl font-semibold text-[#3e3a39]">今後の予定</h3>
+              <h3 className="mt-3 text-2xl font-semibold text-[#3e3a39]">
+                {ui.upcoming}
+              </h3>
               <ul className="mt-5 grid gap-3">
                 {augustNewsletter.upcoming.map((item) => (
                   <li className="flex items-center gap-3 text-base text-[#3e3a39]/78" key={item}>
@@ -127,7 +138,7 @@ export default function ActivitiesPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6A5748]">
                 In this issue
               </p>
-              <nav className="mt-4 grid gap-1" aria-label="8月号の目次">
+              <nav className="mt-4 grid gap-1" aria-label={ui.issueContents}>
                 {augustNewsletter.topics.map((topic, index) => (
                   <a
                     className="rounded-lg px-3 py-2 text-sm leading-6 text-[#3e3a39]/72 transition hover:bg-white hover:text-[#3e3a39]"
@@ -139,8 +150,8 @@ export default function ActivitiesPage() {
                 ))}
               </nav>
             </div>
-            <Link className="btn-primary mt-5 w-full" href="/contact">
-              活動に参加する
+            <Link className="btn-primary mt-5 w-full" href={localePath(lang, "/contact")}>
+              {ui.joinActivities}
             </Link>
           </aside>
         </div>

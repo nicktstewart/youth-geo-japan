@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { ApproachCards } from "@/components/ApproachCards";
 import { HeroSection } from "@/components/HeroSection";
 import { JoinUsSection } from "@/components/JoinUsSection";
@@ -6,17 +7,25 @@ import { MemberCards } from "@/components/MemberCards";
 import { SectionHeading } from "@/components/SectionHeading";
 import { StorySection } from "@/components/StorySection";
 import { WhatWeDoCards } from "@/components/WhatWeDoCards";
-import { homeContent, siteMeta } from "@/lib/site-content";
+import { getDictionary, hasLocale } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: `${siteMeta.name} | ${siteMeta.tagline}`,
-  description: siteMeta.description,
-};
+type HomeProps = { params: Promise<{ lang: string }> };
 
-export default function Home() {
+export async function generateMetadata({ params }: HomeProps): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const { siteMeta } = getDictionary(lang);
+  return { title: `${siteMeta.name} | ${siteMeta.tagline}`, description: siteMeta.description };
+}
+
+export default async function Home({ params }: HomeProps) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const { homeContent } = getDictionary(lang);
+
   return (
     <>
-      <HeroSection />
+      <HeroSection locale={lang} />
 
       <section className="section-pad bg-white">
         <div className="page-shell">
@@ -41,7 +50,7 @@ export default function Home() {
             title={homeContent.approach.title}
           />
           <div className="mt-8">
-            <ApproachCards />
+            <ApproachCards locale={lang} />
           </div>
         </div>
       </section>
@@ -53,14 +62,14 @@ export default function Home() {
             title={homeContent.whatWeDo.title}
           />
           <div className="mt-8">
-            <WhatWeDoCards />
+            <WhatWeDoCards locale={lang} />
           </div>
         </div>
       </section>
 
-      <StorySection />
-      <JoinUsSection />
-      <MemberCards />
+      <StorySection locale={lang} />
+      <JoinUsSection locale={lang} />
+      <MemberCards locale={lang} />
     </>
   );
 }

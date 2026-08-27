@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { contactInfo, navItems, siteMeta } from "@/lib/site-content";
+import { getDictionary, localePath, type Locale } from "@/lib/i18n";
 
-export function SiteFooter() {
+export function SiteFooter({ locale }: { locale: Locale }) {
+  const { contactInfo, navItems, siteMeta, ui } = getDictionary(locale);
+
   return (
     <footer className="border-t border-[#6A5748]/10 bg-[#3e3a39] text-white">
       <div className="page-shell grid gap-8 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
@@ -23,9 +25,13 @@ export function SiteFooter() {
             {siteMeta.tagline}
           </p>
         </div>
-        <nav className="grid gap-2 text-sm" aria-label="Footer navigation">
+        <nav className="grid gap-2 text-sm" aria-label={ui.footerNavLabel}>
           {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="text-white/72 hover:text-white">
+            <Link
+              key={item.href}
+              href={localePath(locale, item.href)}
+              className="text-white/72 hover:text-white"
+            >
               {item.label}
             </Link>
           ))}

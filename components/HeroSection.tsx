@@ -1,9 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatedBlob } from "@/components/AnimatedBlob";
-import { siteMeta } from "@/lib/site-content";
+import { getDictionary, localePath, type Locale } from "@/lib/i18n";
 
-export function HeroSection() {
+export function HeroSection({ locale }: { locale: Locale }) {
+  const { siteMeta, ui } = getDictionary(locale);
+
   return (
     <section className="relative overflow-hidden bg-[#F7F3ED]">
       <AnimatedBlob />
@@ -19,11 +21,11 @@ export function HeroSection() {
             {siteMeta.tagline}
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Link className="btn-primary" href="/contact">
+            <Link className="btn-primary" href={localePath(locale, "/contact")}>
               Contact
             </Link>
-            <Link className="btn-secondary" href="/activities">
-              活動を見る
+            <Link className="btn-secondary" href={localePath(locale, "/activities")}>
+              {ui.viewActivities}
             </Link>
           </div>
         </div>

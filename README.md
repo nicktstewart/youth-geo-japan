@@ -2,7 +2,7 @@
 
 Youth GEO Japan の公式サイトです。地理・GIS・都市や地域の課題に関心を持つ若者が、学び合い、活動し、企業・団体・社会人とつながるための情報発信サイトとして作られています。
 
-このリポジトリは、Next.js / React / TypeScript で作られた静的な Web サイトです。文章や活動情報の多くは `lib/site-content.ts` にまとめられているので、初心者でも小さな修正から Pull Request を出しやすい構成になっています。
+このリポジトリは、Next.js / React / TypeScript で作られた Web サイトです。日本語の文章や活動情報は主に `lib/site-content.ts`、英訳と表示用ラベルは `lib/i18n.ts` にまとめています。
 
 ## はじめに
 
@@ -51,11 +51,13 @@ npm run build
 
 ```text
 app/
-  layout.tsx            全ページ共通のレイアウト、ヘッダー、フッター、メタデータ
-  page.tsx              Home ページ
-  activities/page.tsx   Activities ページ
-  partners/page.tsx     Partners ページ
-  contact/page.tsx      Contact ページ
+  [lang]/               日本語・英語のページ
+    layout.tsx          全ページ共通のレイアウト、ヘッダー、フッター、メタデータ
+    page.tsx            Home ページ
+    activities/page.tsx Activities ページ
+    partners/page.tsx   Partners ページ
+    contact/page.tsx    Contact ページ
+  api/locale/route.ts   選択した表示言語を保存
   globals.css           全体の CSS と Tailwind CSS の設定
 
 components/
@@ -65,6 +67,7 @@ components/
   ...                   各セクション用コンポーネント
 
 lib/
+  i18n.ts               言語設定、英訳、言語別URL
   site-content.ts       サイト上の文章、活動情報、連絡先など
   site-colors.ts        サイトの基本カラー
 
@@ -77,8 +80,15 @@ public/
 
 文章を直す場合:
 
-- まず `lib/site-content.ts` を見てください。
+- 日本語はまず `lib/site-content.ts`、英語は `lib/i18n.ts` を見てください。
+- 内容を追加・変更するときは、両方の言語を同時に更新してください。
 - ページ内に直接書かれている文言も少しあります。その場合は `app/` または `components/` の該当ファイルを修正します。
+
+## 表示言語とURL
+
+- ブラウザの優先言語が日本語なら、従来どおり `/`、`/activities` などで日本語を表示します。
+- それ以外の言語なら `/en`、`/en/activities` などの英語ページへ移動します。
+- ヘッダーの `日本語 / English` で手動変更した言語は Cookie に保存され、次回以降はブラウザ設定より優先されます。
 
 画像を差し替える場合:
 

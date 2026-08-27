@@ -1,5 +1,16 @@
 import type { NextConfig } from "next";
 
+const languageNegotiationHeaders = [
+  {
+    key: "Vary",
+    value: "Accept-Language, Cookie",
+  },
+  {
+    key: "Cache-Control",
+    value: "private, no-store, max-age=0",
+  },
+];
+
 const nextConfig: NextConfig = {
   // Keep the delivery site's directory URL so its relative assets resolve correctly.
   skipTrailingSlashRedirect: true,
@@ -8,6 +19,10 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      { source: "/", headers: languageNegotiationHeaders },
+      { source: "/activities/:path*", headers: languageNegotiationHeaders },
+      { source: "/partners/:path*", headers: languageNegotiationHeaders },
+      { source: "/contact/:path*", headers: languageNegotiationHeaders },
       {
         source: "/hibakujumoku/:path*",
         headers: [

@@ -1,6 +1,8 @@
-import { pdfSupplementContent } from "@/lib/site-content";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
-export function MemberCards() {
+export function MemberCards({ locale }: { locale: Locale }) {
+  const { pdfSupplementContent } = getDictionary(locale);
+
   return (
     <section className="section-pad bg-white">
       <div className="page-shell">

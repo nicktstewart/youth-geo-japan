@@ -1,9 +1,11 @@
-import { homeContent } from "@/lib/site-content";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
 const icons = ["✦", "◎", "▣", "⌁"];
 const colors = ["#a9dbee", "#f8d478", "#6bbc70", "#FFFFFF"];
 
-export function WhatWeDoCards() {
+export function WhatWeDoCards({ locale }: { locale: Locale }) {
+  const { homeContent } = getDictionary(locale);
+
   return (
     <div className="grid gap-5 md:grid-cols-2">
       {homeContent.whatWeDo.cards.map((card, index) => (

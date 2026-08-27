@@ -1,7 +1,8 @@
 import { SectionHeading } from "@/components/SectionHeading";
-import { homeContent } from "@/lib/site-content";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
-export function StorySection() {
+export function StorySection({ locale }: { locale: Locale }) {
+  const { homeContent } = getDictionary(locale);
   const finalParagraph = homeContent.story.paragraphs.at(-1);
   const paragraphs = homeContent.story.paragraphs.slice(0, -1);
 

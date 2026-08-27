@@ -12,7 +12,7 @@ Youth GEO Japan は、地理・GIS・都市・地域課題に関心を持つ若�
 - 企業・団体・社会人がどう協力できるか
 - 問い合わせ先
 
-主な読者は、日本語話者の学生、若手社会人、教育関係者、企業・団体の担当者です。英語が得意ではない人でも迷わないように、日本語を中心に、短くわかりやすい表現を使います。
+主な読者は、国内外の学生、若手社会人、教育関係者、企業・団体の担当者です。日本語と英語を切り替えられる構成とし、どちらも短くわかりやすい表現を使います。
 
 ## 2. 技術構成
 
@@ -30,24 +30,26 @@ Next.js はバージョン差分の影響が大きいため、実装前に `node
 
 ## 3. 現在のページ構成
 
-| Path          | Page       | 役割                                                             |
-| ------------- | ---------- | ---------------------------------------------------------------- |
-| `/`           | Home       | 団体の概要、Vision、活動内容、ストーリー、参加案内、メンバー紹介 |
-| `/activities` | Activities | 活動実績・予定を表示                                             |
-| `/partners`   | Partners   | 企業・団体・社会人向けの協力案内                                 |
-| `/contact`    | Contact    | 参加・協力・問い合わせ用の連絡先                                 |
+| 日本語Path    | 英語Path         | Page       | 役割                                                             |
+| ------------- | ---------------- | ---------- | ---------------------------------------------------------------- |
+| `/`           | `/en`            | Home       | 団体の概要、Vision、活動内容、ストーリー、参加案内、メンバー紹介 |
+| `/activities` | `/en/activities` | Activities | 活動実績・予定を表示                                             |
+| `/partners`   | `/en/partners`   | Partners   | 企業・団体・社会人向けの協力案内                                 |
+| `/contact`    | `/en/contact`    | Contact    | 参加・協力・問い合わせ用の連絡先                                 |
 
-ヘッダーには `Home`、`Activities`、`Partners`、`Contact` への導線があります。フッターには主要ページとメールアドレスがあります。
+ブラウザの優先言語が日本語なら日本語、それ以外なら英語を初期表示します。ヘッダーの言語切り替えで選んだ言語は Cookie に保存し、次回以降はブラウザ設定より優先します。ヘッダーには主要ページへの導線、フッターには主要ページとメールアドレスがあります。
 
 ## 4. ディレクトリ構成
 
 ```text
 app/
-  layout.tsx
-  page.tsx
-  activities/page.tsx
-  partners/page.tsx
-  contact/page.tsx
+  [lang]/
+    layout.tsx
+    page.tsx
+    activities/page.tsx
+    partners/page.tsx
+    contact/page.tsx
+  api/locale/route.ts
   globals.css
 
 components/
@@ -61,10 +63,12 @@ components/
   SectionHeading.tsx
   SiteFooter.tsx
   SiteHeader.tsx
+  LanguageSwitcher.tsx
   StorySection.tsx
   WhatWeDoCards.tsx
 
 lib/
+  i18n.ts
   site-content.ts
   site-colors.ts
 
@@ -75,7 +79,7 @@ public/
 
 ## 5. コンテンツ管理方針
 
-基本的な文章、活動データ、連絡先は `lib/site-content.ts` に集約します。
+日本語の基本的な文章、活動データ、連絡先は `lib/site-content.ts`、英訳と言語別の表示ラベルは `lib/i18n.ts` に集約します。内容を変更するときは両方を更新します。
 
 ただし、現在は一部の見出しや説明文が `app/` や `components/` に直接書かれています。文章修正の Pull Request では、次の順番で確認してください。
 
@@ -179,7 +183,7 @@ export const contactInfo = {
 
 ## 8. メタデータとアクセシビリティ
 
-- `app/layout.tsx` で全体の `metadata` と `lang="ja"` を設定します。
+- `app/[lang]/layout.tsx` で言語別の `metadata` と `<html lang>` を設定します。
 - ページ固有の `metadata` は各 `page.tsx` に設定します。
 - 装飾ではない画像には意味のある `alt` を付けます。
 - 装飾画像は `alt=""` にします。

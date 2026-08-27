@@ -1,15 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { PartnerOptionCard } from "@/components/PartnerOptionCard";
 import { SectionHeading } from "@/components/SectionHeading";
-import { partnerAudiences, partnerHeroCopy, partnerOptions, siteMeta } from "@/lib/site-content";
+import { getDictionary, hasLocale, localePath } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: `Partners | ${siteMeta.name}`,
-  description: "Youth GEO Japanとの協力・協賛・共同企画に関するページです。",
-};
+type PartnersPageProps = { params: Promise<{ lang: string }> };
 
-export default function PartnersPage() {
+export async function generateMetadata({ params }: PartnersPageProps): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const { partnerHeroCopy, siteMeta } = getDictionary(lang);
+  return { title: `Partners | ${siteMeta.name}`, description: partnerHeroCopy };
+}
+
+export default async function PartnersPage({ params }: PartnersPageProps) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const { partnerAudiences, partnerHeroCopy, partnerOptions, ui } = getDictionary(lang);
+
   return (
     <>
       <section className="section-pad bg-[#F7F3ED]">
@@ -18,15 +27,15 @@ export default function PartnersPage() {
             <SectionHeading
               eyebrow="Partners"
               as="h1"
-              title="地理への好奇心から、将来の道を描ける環境をともにつくる"
+              title={ui.partnersTitle}
               description={partnerHeroCopy}
             />
-            <Link className="btn-primary mt-8" href="/contact">
-              協力について問い合わせる
+            <Link className="btn-primary mt-8" href={localePath(lang, "/contact")}>
+              {ui.partnerContact}
             </Link>
           </div>
           <aside className="card-soft bg-white">
-            <h2 className="text-xl font-semibold text-[#3e3a39]">対象者</h2>
+            <h2 className="text-xl font-semibold text-[#3e3a39]">{ui.audiences}</h2>
             <ul className="mt-5 space-y-4">
               {partnerAudiences.map((audience) => (
                 <li key={audience} className="flex gap-3 text-base leading-7 text-[#3e3a39]/76">
@@ -41,7 +50,7 @@ export default function PartnersPage() {
 
       <section className="section-pad bg-white">
         <div className="page-shell">
-          <SectionHeading eyebrow="Collaboration" title="協力メニュー" />
+          <SectionHeading eyebrow="Collaboration" title={ui.collaborationMenu} />
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {partnerOptions.map((option) => (
               <PartnerOptionCard key={option.title} {...option} />
