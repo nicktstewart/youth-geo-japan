@@ -22,6 +22,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
               fill
               sizes="44px"
               className="object-contain p-1"
+              loading="eager"
             />
           </span>
           <span className="truncate text-sm sm:text-base">Youth GEO Japan</span>

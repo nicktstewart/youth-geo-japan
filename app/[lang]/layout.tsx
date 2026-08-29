@@ -35,7 +35,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   if (!hasLocale(lang)) notFound();
 
   return (
-    <html lang={lang}>
+    <html lang={lang} data-scroll-behavior="smooth">
       <body>
         <SiteHeader locale={lang} />
         <main>{children}</main>
