@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { MouseEvent } from "react";
 import type { Locale } from "@/lib/i18n";
 
 type LanguageSwitcherProps = {
@@ -18,6 +19,11 @@ function localeDestination(pathname: string, locale: Locale) {
   return basePath === "/" ? "/en" : `/en${basePath}`;
 }
 
+function explicitLocaleDestination(pathname: string, locale: Locale) {
+  const basePath = pathname.replace(/^\/(ja|en)(?=\/|$)/, "") || "/";
+  return basePath === "/" ? `/${locale}` : `/${locale}${basePath}`;
+}
+
 export function LanguageSwitcher({
   locale,
   label,
@@ -26,14 +32,31 @@ export function LanguageSwitcher({
 }: LanguageSwitcherProps) {
   const pathname = usePathname();
 
-  function selectLocale(nextLocale: Locale) {
-    if (nextLocale !== locale) {
-      // A client-side cookie write preserves the preference without delaying navigation
-      // on a locale API request. The locale route itself remains a normal Next.js link.
-      // eslint-disable-next-line react-hooks/immutability
-      document.cookie = `ygj_locale=${nextLocale}; Path=/; Max-Age=31536000; SameSite=Lax`;
-    }
+  async function selectLocale(event: MouseEvent<HTMLAnchorElement>, nextLocale: Locale) {
     onSelect?.();
+
+    if (nextLocale === locale) return;
+
+    event.preventDefault();
+    const destination = localeDestination(pathname, nextLocale);
+
+    try {
+      const response = await fetch("/api/locale", {
+        body: JSON.stringify({ locale: nextLocale }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      });
+
+      if (!response.ok) throw new Error("Failed to save locale preference");
+
+      // A document navigation avoids reusing a route that Next.js prefetched with
+      // the previous locale cookie. Japanese keeps its canonical, unprefixed URL.
+      window.location.replace(destination);
+    } catch {
+      // The explicit locale route still shows the requested language if preference
+      // persistence is temporarily unavailable.
+      window.location.replace(explicitLocaleDestination(pathname, nextLocale));
+    }
   }
 
   return (
@@ -53,7 +76,8 @@ export function LanguageSwitcher({
           hrefLang={value}
           key={value}
           lang={value}
-          onClick={() => selectLocale(value)}
+          onClick={(event) => void selectLocale(event, value)}
+          prefetch={false}
           replace
         >
           {value === "ja" ? "日本語" : "English"}
