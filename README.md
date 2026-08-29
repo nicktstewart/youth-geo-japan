@@ -47,6 +47,8 @@ npm run build
 
 本番用にビルドできるか確認します。大きめの変更をした場合は実行してください。
 
+Next.js 16 は開発時の生成型を `.next/dev`、本番ビルドの生成型を `.next/types` に分けます。このプロジェクトでは、古い開発用ルート型が本番ビルドに混ざらないように `.next/dev` を `tsconfig.json` の検査対象から除外し、本番用の `.next/types` は通常どおり検査します。ビルドは標準の `.next` ディレクトリを使用します。
+
 ## プロジェクト構成
 
 ```text
@@ -57,11 +59,13 @@ app/
     activities/page.tsx Activities ページ
     partners/page.tsx   Partners ページ
     contact/page.tsx    Contact ページ
-  api/locale/route.ts   選択した表示言語を保存
+  api/locale/route.ts   旧言語保存API（現在のスイッチャーからは未使用）
   globals.css           全体の CSS と Tailwind CSS の設定
 
 components/
   SiteHeader.tsx        ヘッダー
+  MobileNavigation.tsx スマホ用ナビゲーション
+  LanguageSwitcher.tsx 言語切り替え
   SiteFooter.tsx        フッター
   HeroSection.tsx       Home のヒーロー部分
   ...                   各セクション用コンポーネント
@@ -86,9 +90,10 @@ public/
 
 ## 表示言語とURL
 
-- ブラウザの優先言語が日本語なら、従来どおり `/`、`/activities` などで日本語を表示します。
-- それ以外の言語なら `/en`、`/en/activities` などの英語ページへ移動します。
-- ヘッダーの `日本語 / English` で手動変更した言語は Cookie に保存され、次回以降はブラウザ設定より優先されます。
+- 保存済みの選択がなければ、ブラウザが送る優先言語（通常はOSまたはブラウザの言語設定）を使います。日本語なら `/`、`/activities` などで日本語を表示し、それ以外なら `/en`、`/en/activities` などの英語ページへ移動します。
+- ヘッダーの `日本語 / English` で手動変更した言語は、端末の Cookie に1年間保存され、次回以降はブラウザ設定より優先されます。サイトデータを消すと自動判定に戻ります。
+- 言語切り替えは通常の Next.js `Link` で対象言語の静的ページへ直接移動します。`/api/locale` への POST、`router.refresh()`、ページ全体の再読み込みは行いません。
+- Cookie はサーバー側の `proxy.ts` でも読めるため、`localStorage` と違って初回描画後に言語が変わるちらつきを避けられます。この仕組みはデスクトップとモバイルで共通です。
 
 画像を差し替える場合:
 

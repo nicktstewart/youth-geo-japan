@@ -37,7 +37,7 @@ Next.js はバージョン差分の影響が大きいため、実装前に `node
 | `/partners`   | `/en/partners`   | Partners   | 企業・団体・社会人向けの協力案内                                 |
 | `/contact`    | `/en/contact`    | Contact    | 参加・協力・問い合わせ用の連絡先                                 |
 
-ブラウザの優先言語が日本語なら日本語、それ以外なら英語を初期表示します。ヘッダーの言語切り替えで選んだ言語は Cookie に保存し、次回以降はブラウザ設定より優先します。ヘッダーには主要ページへの導線、フッターには主要ページとメールアドレスがあります。
+保存済みの言語選択がなければ、ブラウザが送る優先言語（通常はOSまたはブラウザの言語設定）を使い、日本語なら日本語、それ以外なら英語を初期表示します。ヘッダーの言語切り替えで選んだ言語は Cookie に1年間保存し、次回以降はブラウザ設定より優先します。言語切り替えは対象言語への通常の Next.js `Link` で行い、APIへのPOSTや `router.refresh()` は使いません。ヘッダーには主要ページへの導線、フッターには主要ページとメールアドレスがあります。
 
 ## 4. ディレクトリ構成
 
@@ -49,7 +49,7 @@ app/
     activities/page.tsx
     partners/page.tsx
     contact/page.tsx
-  api/locale/route.ts
+  api/locale/route.ts  # 旧言語保存API。現在のスイッチャーからは未使用
   globals.css
 
 components/
@@ -59,6 +59,7 @@ components/
   HeroSection.tsx
   JoinUsSection.tsx
   MemberCards.tsx
+  MobileNavigation.tsx
   PartnerOptionCard.tsx
   SectionHeading.tsx
   SiteFooter.tsx
@@ -188,6 +189,8 @@ export const contactInfo = {
 - 装飾ではない画像には意味のある `alt` を付けます。
 - 装飾画像は `alt=""` にします。
 - リンクやボタンはキーボード操作でも使える状態にします。
+- スマホ用ナビゲーションは、リンクまたは言語の選択、外側のタップ、Escapeで閉じます。Escapeで閉じた場合は開閉ボタンへフォーカスを戻します。
+- ナビゲーションの開閉には `button`、`aria-expanded`、`aria-controls` を使い、移動先は通常のリンクとして実装します。
 - 色だけで意味を伝えないようにします。
 
 ## 9. Pull Request で確認すること
@@ -201,6 +204,8 @@ Pull Request を出す前に、できるだけ以下を確認してください�
 - 日本語が文字化けしていない
 - 変更した文章が読みやすい
 - 仕様が変わった場合、このファイルも更新した
+
+Next.js 16 の開発用生成型は `.next/dev`、本番用生成型は `.next/types` に出力されます。古い開発用ルート型と現在の本番用ルート型が衝突しないよう、`tsconfig.json` では `.next/dev` を検査対象から除外し、本番用の `.next/types` は検査します。`npm run build` は標準の `.next` ディレクトリを使います。
 
 ## 10. 今後の改善候補
 

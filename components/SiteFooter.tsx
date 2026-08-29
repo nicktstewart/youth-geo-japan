@@ -30,7 +30,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             <Link
               key={item.href}
               href={localePath(locale, item.href)}
-              className="text-white/72 hover:text-white"
+              className="flex min-h-11 items-center text-white/72 hover:text-white"
             >
               {item.label}
             </Link>
@@ -38,7 +38,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
         </nav>
         <div className="text-sm leading-7 text-white/72">
           <p>Contact</p>
-          <a className="hover:text-white" href={`mailto:${contactInfo.email}`}>
+          <a className="inline-flex min-h-11 items-center hover:text-white" href={`mailto:${contactInfo.email}`}>
             {contactInfo.email}
           </a>
         </div>

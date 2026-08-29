@@ -19,6 +19,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
@@ -34,6 +35,7 @@ body {
   font-weight: 400;
   letter-spacing: 0.01em;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
 main {
@@ -57,7 +59,7 @@ a {
 }
 
 .section-pad {
-  padding-block: clamp(4.5rem, 8vw, 7.5rem);
+  padding-block: clamp(3rem, 8vw, 7.5rem);
 }
 
 .page-shell {
@@ -211,6 +213,27 @@ a {
   transform: translateY(4px);
 }
 
+.hamburger {
+  transition: background-color 160ms ease;
+}
+
+.hamburger::before,
+.hamburger::after {
+  transition: transform 160ms ease;
+}
+
+.hamburger-open {
+  background: transparent;
+}
+
+.hamburger-open::before {
+  transform: translateY(2px) rotate(45deg);
+}
+
+.hamburger-open::after {
+  transform: rotate(-45deg);
+}
+
 .map-grid {
   background-image:
     linear-gradient(rgb(106 87 72 / 9%) 1px, transparent 1px),
@@ -309,6 +332,31 @@ a {
   left: -1.8rem;
   top: 50%;
   transform: translateY(-50%);
+}
+
+@media (max-width: 39.999rem) {
+  .card-soft,
+  .card-hover {
+    padding: 1.25rem;
+  }
+
+  .cycle {
+    width: min(15rem, calc(100vw - 7rem));
+  }
+
+  .cycle-step {
+    width: 4.65rem;
+    min-height: 2.5rem;
+    font-size: 0.8rem;
+  }
+
+  .cycle-step-2 {
+    right: -1rem;
+  }
+
+  .cycle-step-4 {
+    left: -1rem;
+  }
 }
 
 .fade-up {
