@@ -87,6 +87,7 @@ public/
 - 日本語はまず `lib/site-content.ts`、英語は `lib/i18n.ts` を見てください。
 - 内容を追加・変更するときは、両方の言語を同時に更新してください。
 - ページ内に直接書かれている文言も少しあります。その場合は `app/` または `components/` の該当ファイルを修正します。
+- コンテンツ変更時は [SEO・AIO 運用ガイド](./docs/seo-aio-guide.md) も確認し、metadata と sitemap の `lastmod` を内容と同時に保守してください。特に Activities の更新では `app/sitemap.ts` の `"/activities"` の日付更新が必須です。
 
 ## 表示言語とURL
 
@@ -155,3 +156,5 @@ Next.js の学習に使える公式リンク:
 ## 参考仕様
 
 サイトの目的、ページ構成、実装方針は [youth_geo_japan_website_spec.md](./youth_geo_japan_website_spec.md) にまとめています。大きな変更をする場合は、コードと一緒にこの仕様も更新してください。
+
+検索エンジンと AI 検索向けの実装・更新手順は [SEO・AIO 運用ガイド](./docs/seo-aio-guide.md) にまとめています。

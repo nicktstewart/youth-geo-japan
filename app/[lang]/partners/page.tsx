@@ -4,14 +4,23 @@ import { notFound } from "next/navigation";
 import { PartnerOptionCard } from "@/components/PartnerOptionCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import { getDictionary, hasLocale, localePath } from "@/lib/i18n";
+import { createPageMetadata } from "@/lib/seo";
 
 type PartnersPageProps = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: PartnersPageProps): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
-  const { partnerHeroCopy, siteMeta } = getDictionary(lang);
-  return { title: `Partners | ${siteMeta.name}`, description: partnerHeroCopy };
+  const { partnerHeroCopy } = getDictionary(lang);
+  return createPageMetadata({
+    locale: lang,
+    pathname: "/partners",
+    title:
+      lang === "ja"
+        ? "企業・教育機関との協力 | 地理・GISと若者をつなぐ"
+        : "Partnerships | Connecting Youth, Geography, and GIS",
+    description: partnerHeroCopy,
+  });
 }
 
 export default async function PartnersPage({ params }: PartnersPageProps) {

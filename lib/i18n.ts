@@ -39,6 +39,7 @@ const ja = {
     footerNavLabel: "フッターナビゲーション",
     openNavigation: "ナビゲーションを開く",
     languageLabel: "表示言語",
+    heroLabel: "日本の若者が地理・GIS・地理空間情報を学ぶコミュニティ",
     viewActivities: "活動を見る",
     joinActivities: "活動に参加する",
     activitiesPageTitle: "活動の記録",
@@ -83,7 +84,7 @@ const en = {
     name: "Youth GEO Japan",
     tagline: "Curiosity, straight into the future.",
     description:
-      "Youth GEO Japan is a community where young people explore geography, take on new challenges, and learn together.",
+      "Youth GEO Japan is a learning community where young people in Japan explore geography, GIS, and geospatial information, teach one another, and address social and local challenges.",
   },
   homeContent: {
     vision: {
@@ -261,6 +262,7 @@ const en = {
     footerNavLabel: "Footer navigation",
     openNavigation: "Open navigation",
     languageLabel: "Language",
+    heroLabel: "Japan’s youth community for geography, GIS, and geospatial learning",
     viewActivities: "View activities",
     joinActivities: "Join our activities",
     activitiesPageTitle: "Activity journal",

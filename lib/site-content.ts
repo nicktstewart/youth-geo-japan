@@ -8,7 +8,7 @@ export const siteMeta = {
   name: "Youth GEO Japan",
   tagline: "好奇心を、まっすぐ未来へ。",
   description:
-    "Youth GEO Japanは、地理への好奇心を軸に、若者が自由に挑戦し、学び合うコミュニティです。",
+    "Youth GEO Japanは、日本の若者が地理・GIS・地理空間情報を学び、教え合い、社会や地域の課題に挑戦する学習コミュニティです。",
 };
 
 export const homeContent = {

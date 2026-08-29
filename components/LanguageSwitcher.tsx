@@ -14,7 +14,8 @@ type LanguageSwitcherProps = {
 function localeDestination(pathname: string, locale: Locale) {
   const basePath = pathname.replace(/^\/(ja|en)(?=\/|$)/, "") || "/";
 
-  return basePath === "/" ? `/${locale}` : `/${locale}${basePath}`;
+  if (locale === "ja") return basePath;
+  return basePath === "/" ? "/en" : `/en${basePath}`;
 }
 
 export function LanguageSwitcher({

@@ -184,8 +184,11 @@ export const contactInfo = {
 
 ## 8. メタデータとアクセシビリティ
 
-- `app/[lang]/layout.tsx` で言語別の `metadata` と `<html lang>` を設定します。
-- ページ固有の `metadata` は各 `page.tsx` に設定します。
+- `app/[lang]/layout.tsx` で言語別の共通 `metadata`、JSON-LD と `<html lang>` を設定します。
+- ページ固有の `metadata` は各 `page.tsx` から `lib/seo.ts` の共通処理を使って設定します。
+- `app/sitemap.ts` で言語 alternate と route ごとの正確な `lastmod` を管理します。Activities の内容を更新するときは `"/activities"` の日付も必ず更新します。
+- `app/robots.ts` で sitemap を検索エンジンに通知します。
+- SEO・AIO の詳しい更新手順は `docs/seo-aio-guide.md` に従います。
 - 装飾ではない画像には意味のある `alt` を付けます。
 - 装飾画像は `alt=""` にします。
 - リンクやボタンはキーボード操作でも使える状態にします。
@@ -203,6 +206,7 @@ Pull Request を出す前に、できるだけ以下を確認してください�
 - PC 幅とスマホ幅の両方で見た
 - 日本語が文字化けしていない
 - 変更した文章が読みやすい
+- 日本語と英語の内容、metadata、sitemap の `lastmod` が変更内容と一致している
 - 仕様が変わった場合、このファイルも更新した
 
 Next.js 16 の開発用生成型は `.next/dev`、本番用生成型は `.next/types` に出力されます。古い開発用ルート型と現在の本番用ルート型が衝突しないよう、`tsconfig.json` では `.next/dev` を検査対象から除外し、本番用の `.next/types` は検査します。`npm run build` は標準の `.next` ディレクトリを使います。
@@ -214,5 +218,4 @@ Next.js 16 の開発用生成型は `.next/dev`、本番用生成型は `.next/t
 - Contact に Discord、SNS、LINE QR などを追加する
 - 文章データをさらに `lib/site-content.ts` に集約する
 - 活動カード用の共通コンポーネントを追加する
-- OGP 画像や `robots.txt` / `sitemap` を整備する
 - README にスクリーンショットを追加する
