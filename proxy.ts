@@ -17,6 +17,19 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
+  if (pathname === "/kagemichi") {
+    return new Response(null, {
+      status: 308,
+      headers: {
+        Location: new URL("/kagemichi/", request.url).toString(),
+      },
+    });
+  }
+
+  if (pathname.startsWith("/kagemichi/")) {
+    return NextResponse.next();
+  }
+
   if (/^\/(ja|en)(?:\/|$)/.test(pathname)) {
     return NextResponse.next();
   }
@@ -51,5 +64,6 @@ export const config = {
     "/ja/:path*",
     "/en/:path*",
     "/hibakujumoku/:path*",
+    "/kagemichi/:path*",
   ],
 };

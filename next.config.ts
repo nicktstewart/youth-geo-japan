@@ -32,6 +32,15 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        source: "/kagemichi/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow, noarchive",
+          },
+        ],
+      },
     ];
   },
   async rewrites() {
@@ -39,6 +48,10 @@ const nextConfig: NextConfig = {
       {
         source: "/hibakujumoku/",
         destination: "/hibakujumoku/index.html",
+      },
+      {
+        source: "/kagemichi/",
+        destination: "/kagemichi/index.html",
       },
     ];
   },
