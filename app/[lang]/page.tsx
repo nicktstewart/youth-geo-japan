@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { StorySection } from "@/components/StorySection";
 import { WhatWeDoCards } from "@/components/WhatWeDoCards";
 import { getDictionary, hasLocale } from "@/lib/i18n";
+import { createPageMetadata } from "@/lib/seo";
 
 type HomeProps = { params: Promise<{ lang: string }> };
 
@@ -15,7 +16,15 @@ export async function generateMetadata({ params }: HomeProps): Promise<Metadata>
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const { siteMeta } = getDictionary(lang);
-  return { title: `${siteMeta.name} | ${siteMeta.tagline}`, description: siteMeta.description };
+  return createPageMetadata({
+    locale: lang,
+    pathname: "/",
+    title:
+      lang === "ja"
+        ? "地理・GISを学ぶ若者コミュニティ | Youth GEO Japan"
+        : "Youth GEO Japan | Geography & GIS Learning Community",
+    description: siteMeta.description,
+  });
 }
 
 export default async function Home({ params }: HomeProps) {

@@ -20,7 +20,7 @@ export function ContactCards({ locale }: { locale: Locale }) {
           <a className="btn-primary" href={`mailto:${contactInfo.email}`}>
             {content.emailButton}
           </a>
-          <p className="text-sm font-semibold text-[#6A5748]">
+          <p className="break-all text-sm font-semibold text-[#6A5748]">
             {contactInfo.email}
           </p>
         </div>

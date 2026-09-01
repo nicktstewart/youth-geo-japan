@@ -3,14 +3,23 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SectionHeading } from "@/components/SectionHeading";
 import { getDictionary, hasLocale, localePath } from "@/lib/i18n";
+import { createPageMetadata } from "@/lib/seo";
 
 type ActivitiesPageProps = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: ActivitiesPageProps): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
-  const { siteMeta, ui } = getDictionary(lang);
-  return { title: `Activities | ${siteMeta.name}`, description: ui.activitiesPageDescription };
+  const { ui } = getDictionary(lang);
+  return createPageMetadata({
+    locale: lang,
+    pathname: "/activities",
+    title:
+      lang === "ja"
+        ? "活動・ニュースレター | 地理・GISの学びと交流"
+        : "Activities & Newsletter | Geography and GIS Learning",
+    description: ui.activitiesPageDescription,
+  });
 }
 
 export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
