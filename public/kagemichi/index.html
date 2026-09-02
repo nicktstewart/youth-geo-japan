@@ -99,9 +99,6 @@ function enableAdaptivePalette(){const rawCompute=compute;compute=()=>{rawComput
 if(document.readyState==='loading')window.addEventListener('load',enableAdaptivePalette,{once:true});else enableAdaptivePalette();
 function updateResolutionCopy(){const model=[...document.querySelectorAll('.research article')].find(x=>x.querySelector('h3')?.textContent==='日射モデル');if(!model)return;const scale=DATA.experience==='route'?'広域ルート比較':'樹木配置のミクロ比較';model.querySelector('p').textContent=`PLATEAU 2025の建物外形と計測高さから${R}m格子へ影を投影する。${scale}に合わせた解像度であり、直達成分は格子内の影被覆率、拡散成分は周囲150m・16方位の近似天空率で補正する。2Dと3Dは同じ日射格子と色尺度を用いる。`}
 if(document.readyState==='loading')window.addEventListener('load',updateResolutionCopy,{once:true});else updateResolutionCopy();
-// The v2 model runs on load; suppress the legacy pre-load calculation so the
-// same city-wide shadow field is not computed twice.
-compute=()=>{};
 const pointers=new Map();let drag=null,pinch=null,moved=false;
 canvas.addEventListener('wheel',e=>{e.preventDefault();const r=canvas.getBoundingClientRect();zoomBy(Math.exp(-e.deltaY*.0015),e.clientX-r.left,e.clientY-r.top)},{passive:false});
 canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});moved=false;drag={x:e.clientX,y:e.clientY,shift:e.shiftKey};if(pointers.size===2){const a=[...pointers.values()];pinch={d:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)}}});
