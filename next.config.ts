@@ -17,6 +17,20 @@ const nextConfig: NextConfig = {
   images: {
     imageSizes: [32, 48, 64, 96, 128, 256, 384, 512],
   },
+  async redirects() {
+    return [
+      {
+        source: "/hibakujumoku",
+        destination: "/hibakujumoku/",
+        permanent: true,
+      },
+      {
+        source: "/kagemichi",
+        destination: "/kagemichi/",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       { source: "/", headers: languageNegotiationHeaders },
