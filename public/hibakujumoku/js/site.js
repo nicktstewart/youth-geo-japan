@@ -3,14 +3,13 @@
   const D = window.CITY_DATA;
   if (!D || !window.L) return;
 
-  const list = document.getElementById("site-list");
   const detail = document.getElementById("detail");
-  const terrainReadout = document.getElementById("terrain-readout");
+  const result = document.getElementById("filter-result");
   const slopeLegend = document.getElementById("slope-legend");
-  const esc = (value) => String(value ?? "—").replace(/[&<>"']/g, (char) => ({
+  const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   })[char]);
-  const fmt = (value, digits = 1) => value == null ? "—" : Number(value).toFixed(digits);
+  const fmt = (value, digits = 1) => value == null ? "" : Number(value).toFixed(digits);
 
   const map = L.map("map", {
     preferCanvas: true,
@@ -23,122 +22,238 @@
     wheelPxPerZoomLevel: 90,
   });
 
-  const attribution = '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener">国土地理院</a>';
-  map.attributionControl.addAttribution(attribution);
-  L.imageOverlay(D.map_images.base.url, D.map_images.base.bounds, {
-    opacity: 1,
-    interactive: false,
-  }).addTo(map);
-
+  map.attributionControl.addAttribution('<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener">国土地理院</a>');
+  const contextBounds = L.latLngBounds(D.map_images.context.bounds);
+  L.imageOverlay(D.map_images.context.url, D.map_images.context.bounds, { opacity: 1, interactive: false }).addTo(map);
+  L.imageOverlay(D.map_images.base.url, D.map_images.base.bounds, { opacity: 1, interactive: false }).addTo(map);
   const terrainLayers = {
-    hillshade: L.imageOverlay(D.map_images.hillshade.url, D.map_images.hillshade.bounds, {
-      opacity: 0.42, interactive: false,
-    }),
-    slope: L.imageOverlay(D.map_images.slope.url, D.map_images.slope.bounds, {
-      opacity: 0.58, interactive: false,
-    }),
+    hillshade: L.imageOverlay(D.map_images.hillshade.url, D.map_images.hillshade.bounds, { opacity: 0.42, interactive: false }),
+    slope: L.imageOverlay(D.map_images.slope.url, D.map_images.slope.bounds, { opacity: 0.58, interactive: false }),
   };
   let terrainMode = "hillshade";
   terrainLayers.hillshade.addTo(map);
-
   L.control.scale({ imperial: false, position: "bottomright", maxWidth: 130 }).addTo(map);
-  const canvasRenderer = L.canvas({ padding: 0.5 });
-  const allPoints = [[D.hypocenter.latitude, D.hypocenter.longitude]];
+
+  const renderer = L.canvas({ padding: 0.5 });
+  const hypocenter = [D.hypocenter.latitude, D.hypocenter.longitude];
   const markers = [];
-  let selected = 0;
+  let selectedSite = null;
+  let selectedIndividual = 0;
   let rangeLayer = L.layerGroup().addTo(map);
 
-  function slopeClass(value) {
-    const slope = Number(value);
-    if (slope < 2) return "ほぼ平坦";
-    if (slope < 5) return "緩斜面";
-    if (slope < 15) return "斜面";
-    return "急斜面";
-  }
-
-  function markerIcon(record, active = false) {
-    return L.divIcon({
-      className: "tree-marker-wrap",
-      html: `<span class="tree-marker${active ? " active" : ""}" style="--marker:${record.survival_state_color}">${record.tree_count > 1 ? record.tree_count : ""}</span>`,
-      iconSize: active ? [34, 34] : [28, 28],
-      iconAnchor: active ? [17, 17] : [14, 14],
-      tooltipAnchor: [12, 0],
-    });
-  }
-
-  function popupHtml(record) {
-    return `<div class="map-popup"><b>${esc(record.site_name)}</b><span>${esc(record.survival_state_label)}</span><dl><dt>標高</dt><dd>${fmt(record.elevation_m, 1)} m</dd><dt>傾斜</dt><dd>${fmt(record.slope_deg, 1)}°・${slopeClass(record.slope_deg)}</dd><dt>局所比高</dt><dd>${fmt(record.local_relief_5px_m, 1)} m</dd></dl></div>`;
-  }
-
-  const hypocenter = [D.hypocenter.latitude, D.hypocenter.longitude];
   [500, 1000, 2000].forEach((radius) => L.circle(hypocenter, {
-    radius,
-    renderer: canvasRenderer,
-    color: "#9b4e3f",
-    weight: 1,
-    opacity: 0.45,
-    fill: false,
-    dashArray: "5 6",
-    interactive: false,
+    radius, renderer, color: "#9b4e3f", weight: 1, opacity: 0.45,
+    fill: false, dashArray: "5 6", interactive: false,
   }).addTo(map));
   L.marker(hypocenter, {
     icon: L.divIcon({ className: "hypocenter-icon", html: "<span>爆心地</span>", iconSize: [70, 30], iconAnchor: [10, 15] }),
     interactive: false,
   }).addTo(map);
 
+  function markerIcon(record, active = false) {
+    const colors = {
+      "被爆時から同じ場所": "#2F667F",
+      "移植・株分け": "#C47A2C",
+      "場所の経過未確認": "#8A8F8C",
+    };
+    const counts = new Map();
+    record.individuals.forEach((item) => {
+      const category = item.location_history_category || "場所の経過未確認";
+      counts.set(category, (counts.get(category) || 0) + 1);
+    });
+    let cursor = 0;
+    const entries = [...counts.entries()];
+    const segments = [];
+    entries.forEach(([category, count], index) => {
+      const start = cursor;
+      const end = cursor + count / record.individuals.length * 100;
+      const insetStart = index === 0 ? start : Math.min(start + 0.8, end);
+      const insetEnd = index === entries.length - 1 ? end : Math.max(end - 0.8, insetStart);
+      if (index > 0) segments.push(`#fffdf8 ${Math.max(0, start - 0.8)}% ${insetStart}%`);
+      segments.push(`${colors[category] || colors["場所の経過未確認"]} ${insetStart}% ${insetEnd}%`);
+      if (index < entries.length - 1) segments.push(`#fffdf8 ${insetEnd}% ${Math.min(100, end + 0.8)}%`);
+      cursor = end;
+    });
+    const markerBackground = counts.size === 1
+      ? colors[[...counts.keys()][0]]
+      : `conic-gradient(${segments.join(",")})`;
+    return L.divIcon({
+      className: "tree-marker-wrap",
+      html: `<span class="tree-marker${active ? " active" : ""}" style="--marker:${markerBackground}"><i>${record.individuals.length}</i></span>`,
+      iconSize: active ? [34, 34] : [28, 28],
+      iconAnchor: active ? [17, 17] : [14, 14],
+      tooltipAnchor: [12, 0],
+    });
+  }
+
   D.records.forEach((record, index) => {
-    const latlng = [record.latitude, record.longitude];
-    allPoints.push(latlng);
-    const marker = L.marker(latlng, { icon: markerIcon(record), riseOnHover: true })
-      .bindTooltip(`${esc(record.site_name)}｜${fmt(record.elevation_m, 1)} m・${fmt(record.slope_deg, 1)}°`, { direction: "right" })
-      .bindPopup(popupHtml(record), { minWidth: 190 })
-      .on("click", () => select(index, false))
+    if (!record.has_mappable_location) {
+      markers.push(null);
+      return;
+    }
+    const marker = L.marker([record.latitude, record.longitude], {
+      icon: markerIcon(record), riseOnHover: true,
+    }).bindTooltip(esc(record.site_name), { direction: "right" })
+      .on("click", () => selectSite(index, true))
       .addTo(map);
     markers.push(marker);
   });
 
-  function terrainRelation(record) {
-    const delta = Number(record.slope_deg) - Number(D.terrain_median_slope_deg);
-    const comparison = Math.abs(delta) < 0.5 ? "都市中央値とほぼ同じ" : delta > 0 ? `都市中央値より${fmt(delta, 1)}°急` : `都市中央値より${fmt(Math.abs(delta), 1)}°緩やか`;
-    return `${slopeClass(record.slope_deg)}／${comparison}`;
+  map.setMinZoom(map.getBoundsZoom(contextBounds, true));
+
+  function item(label, value, raw = false) {
+    if (value == null || value === "") return "";
+    return `<div><dt>${esc(label)}</dt><dd>${raw ? value : esc(value)}</dd></div>`;
   }
 
-  function updateTerrainReadout(record) {
-    terrainReadout.innerHTML = `<p>TERRAIN AT THIS SITE</p><h3>${esc(record.site_name)}</h3><div><span><small>標高</small><b>${fmt(record.elevation_m, 1)} m</b></span><span><small>傾斜</small><b>${fmt(record.slope_deg, 1)}°</b></span><span><small>局所比高</small><b>${fmt(record.local_relief_5px_m, 1)} m</b></span></div><strong>${terrainRelation(record)}</strong><em>地形は残存理由の候補を検討する文脈です。この試作では共通する傾斜条件は確認されていません。</em>`;
+  function section(title, items, className = "") {
+    const content = items.filter(Boolean).join("");
+    return content ? `<section class="detail-group ${className}"><h3>${esc(title)}</h3><dl>${content}</dl></section>` : "";
+  }
+
+  function detailHtml(record, individualIndex) {
+    const individual = record.individuals[individualIndex];
+    const selector = record.individuals.length > 1
+      ? `<div class="individual-selector"><span>この地点の個体</span><div>${record.individuals.map((entry, index) => `<button data-individual-index="${index}"${index === individualIndex ? ' class="active"' : ""}>${esc(entry.individual_id)} ${esc(entry.species_ja)}</button>`).join("")}</div></div>`
+      : "";
+    const conditionLabel = individual.condition_date ? `公開資料に記録された状態（${individual.condition_date}）` : "公開資料に記録された状態";
+    const photo = individual.photo_url
+      ? `<a href="${esc(individual.photo_url)}" target="_blank" rel="noopener">出典ページの写真を確認</a>`
+      : null;
+    const locationHistory = individual.transplant_text
+      ? `${individual.exposure_site_name ? `被爆時所在地：${individual.exposure_site_name}／` : ""}現在地：${record.site_name}／${individual.transplant_text}`
+      : null;
+    const terrainTitle = individual.moved ? "現在地の地形（被爆時の環境ではない）" : "現在地の地形";
+    return `<button id="detail-close" class="detail-close" type="button" aria-label="詳細パネルを閉じる">閉じる</button><header class="detail-head"><p>選択地点</p><h2>${esc(record.site_name)}</h2><span>${record.individuals.length}個体を収録</span></header>${selector}
+      ${section("基本情報", [
+        item("認識番号", individual.individual_id),
+        item("樹種", [individual.species_ja, individual.species_scientific].filter(Boolean).join(" / ")),
+        item("地点名", record.site_name),
+        item("所在地", individual.address || record.address),
+      ])}
+      ${section("現在の状態", [
+        item(conditionLabel, individual.current_condition),
+        item("2017年診断時の状態", individual.diagnosis_2017 ? `${individual.diagnosis_2017}（${individual.diagnosis_2017_date || "2017年"}）` : null),
+        item("大きさ", individual.size_text),
+        item("樹形", individual.tree_form_text),
+        item("現在の写真", photo, true),
+      ])}
+      ${section("被爆と保存の記録", [
+        item("爆心地からの距離", individual.distance_m == null ? null : `${fmt(individual.distance_m, 0)} m`),
+        item("被爆時からの場所", individual.location_history_category),
+        item("被爆時所在地と現在地", locationHistory),
+        item("被爆の痕跡", individual.damage_text),
+        item("保存措置", individual.preservation_treatment),
+      ], individual.moved ? "transplanted-record" : "")}
+      ${section(terrainTitle, [
+        item("標高", individual.elevation_m == null ? null : `${fmt(individual.elevation_m, 1)} m`),
+        item("傾斜角", individual.slope_deg == null ? null : `${fmt(individual.slope_deg, 1)}°`),
+        item("斜面方位", individual.aspect_deg == null ? null : `${fmt(individual.aspect_deg, 1)}°`),
+      ])}
+      ${section("出典", [
+        item("資料名", individual.source_title),
+        item("調査年または公開年", individual.source_year),
+        item("参照URL", individual.source_url ? `<a href="${esc(individual.source_url)}" target="_blank" rel="noopener">資料を開く</a>` : null, true),
+      ], "source-group")}`;
+  }
+
+  function updateDetail() {
+    if (selectedSite == null) return;
+    const record = D.records[selectedSite];
+    detail.innerHTML = detailHtml(record, selectedIndividual);
+    detail.classList.add("open");
+    detail.querySelector("#detail-close").onclick = closeDetail;
+    detail.querySelectorAll("[data-individual-index]").forEach((button) => {
+      button.onclick = () => {
+        selectedIndividual = Number(button.dataset.individualIndex);
+        updateDetail();
+      };
+    });
+  }
+
+  function closeDetail() {
+    detail.classList.remove("open");
+  }
+
+  function keepMarkerVisible(record) {
+    if (!window.matchMedia("(max-width: 1100px)").matches) return;
+    window.setTimeout(() => {
+      map.invalidateSize();
+      const markerPoint = map.latLngToContainerPoint([record.latitude, record.longitude]);
+      const visibleRight = map.getSize().x - detail.offsetWidth - 24;
+      if (markerPoint.x > visibleRight) {
+        map.panBy([markerPoint.x - visibleRight, 0], { animate: true });
+      }
+    }, 180);
   }
 
   function updateRanges(record) {
     rangeLayer.clearLayers();
+    if (!record.has_mappable_location) return;
     [50, 100, 250].forEach((radius) => L.circle([record.latitude, record.longitude], {
-      radius,
-      renderer: canvasRenderer,
-      color: "#176d58",
-      weight: radius === 250 ? 2 : 1,
-      opacity: radius === 250 ? 0.8 : 0.5,
-      fill: false,
-      interactive: false,
+      radius, renderer, color: "#176d58", weight: radius === 250 ? 2 : 1,
+      opacity: radius === 250 ? 0.8 : 0.5, fill: false, interactive: false,
     }).addTo(rangeLayer));
   }
 
-  function detailHtml(record) {
-    return `<header class="detail-head"><p class="eyebrow">${esc(record.mechanism_label)}</p><h2>${esc(record.site_name)}</h2><p><span class="detail-state" style="--state:${record.survival_state_color}">${esc(record.survival_state_label)}</span>${esc(record.name_ja)}｜${record.tree_count}本相当</p></header><section class="story-block"><span>WHAT DAMAGED IT</span><h3>何が木を傷つけたか</h3><p>${esc(record.damage_factor)}</p></section><section class="story-block answer"><span>HOW IT REMAINS</span><h3>なぜ現在まで残ったと考えられるか</h3><p>${esc(record.retention_pathway)}</p></section><section class="story-block terrain-story"><span>TERRAIN CONTEXT</span><h3>この地点の地形</h3><p>標高${fmt(record.elevation_m, 1)} m、傾斜${fmt(record.slope_deg, 1)}°（${slopeClass(record.slope_deg)}）、局所比高${fmt(record.local_relief_5px_m, 1)} m。${terrainRelation(record)}です。</p><small>現在地形の記述であり、初期生存原因の証明ではありません。</small></section><section class="story-block unknown"><span>WHAT WE STILL DON'T KNOW</span><h3>まだ分からないこと</h3><p>${esc(record.uncertainty_statement)}</p></section><section class="fact-section"><h3>根拠と現在環境</h3><div class="fact-grid"><div><span>証拠評価</span><strong>${esc(record.evidence_level)}</strong></div><div><span>爆心地から</span><strong>${fmt(record.calculated_distance_m, 0)} m</strong></div><div><span>建物率 100 m</span><strong>${fmt(record.building_cover_100m_pct, 1)}%</strong></div><div><span>緑地率 100 m</span><strong>${fmt(record.green_cover_100m_pct, 1)}%</strong></div></div><p>${esc(record.evidence_assessment)}</p><a class="source-link" href="${esc(record.source_url)}" target="_blank" rel="noopener">公式資料を確認する →</a></section>`;
-  }
-
-  function select(index, move = true) {
-    selected = index;
+  function selectSite(index, move = true) {
+    selectedSite = index;
+    selectedIndividual = 0;
     const record = D.records[index];
-    list.querySelectorAll("button").forEach((button, itemIndex) => button.classList.toggle("active", itemIndex === index));
-    markers.forEach((marker, itemIndex) => marker.setIcon(markerIcon(D.records[itemIndex], itemIndex === index)));
+    markers.forEach((marker, markerIndex) => {
+      if (marker) marker.setIcon(markerIcon(D.records[markerIndex], markerIndex === index));
+    });
     updateRanges(record);
-    updateTerrainReadout(record);
-    detail.innerHTML = detailHtml(record);
-    if (move) map.flyTo([record.latitude, record.longitude], 16, { duration: 0.65 });
+    updateDetail();
+    if (move) keepMarkerVisible(record);
   }
 
-  function initList() {
-    list.innerHTML = D.records.map((record) => `<button class="site-choice"><strong>${esc(record.site_name)}</strong><small>${esc(record.name_ja)}・${record.tree_count}本相当</small><span class="state-badge" style="--state:${record.survival_state_color}">${esc(record.survival_state_label)}</span><span class="terrain-mini">標高 ${fmt(record.elevation_m, 0)} m｜傾斜 ${fmt(record.slope_deg, 1)}°</span></button>`).join("");
-    list.querySelectorAll("button").forEach((button, index) => { button.onclick = () => select(index); });
+  function distanceMatches(value, filter) {
+    if (!filter) return true;
+    if (value == null) return false;
+    if (filter === "3000+") return Number(value) >= 3000;
+    const [minimum, maximum] = filter.split("-").map(Number);
+    return Number(value) >= minimum && Number(value) <= maximum;
   }
+
+  const siteFilter = document.getElementById("filter-site");
+  const speciesFilter = document.getElementById("filter-species");
+  const distanceFilter = document.getElementById("filter-distance");
+  const preservationFilter = document.getElementById("filter-preservation");
+  const species = [...new Set(D.records.flatMap((record) => record.individuals.map((item) => item.species_ja)).filter(Boolean))].sort((a, b) => a.localeCompare(b, "ja"));
+  speciesFilter.insertAdjacentHTML("beforeend", species.map((name) => `<option value="${esc(name)}">${esc(name)}</option>`).join(""));
+  const preservation = [...new Set(D.records.flatMap((record) => record.individuals.map((item) => item.location_history_category)).filter(Boolean))];
+  preservationFilter.insertAdjacentHTML("beforeend", preservation.map((name) => `<option value="${esc(name)}">${esc(name)}</option>`).join(""));
+
+  function applyFilters() {
+    const siteQuery = siteFilter.value.trim().toLocaleLowerCase("ja");
+    const speciesQuery = speciesFilter.value;
+    const distanceQuery = distanceFilter.value;
+    const preservationQuery = preservationFilter.value;
+    const visible = [];
+    D.records.forEach((record, index) => {
+      const matches = record.has_mappable_location
+        && (!siteQuery || `${record.site_name} ${record.address || ""}`.toLocaleLowerCase("ja").includes(siteQuery))
+        && (!speciesQuery || record.individuals.some((item) => item.species_ja === speciesQuery))
+        && (!distanceQuery || record.individuals.some((item) => distanceMatches(item.distance_m, distanceQuery)))
+        && (!preservationQuery || record.individuals.some((item) => item.location_history_category === preservationQuery));
+      const marker = markers[index];
+      if (marker && matches && !map.hasLayer(marker)) marker.addTo(map);
+      if (marker && !matches && map.hasLayer(marker)) map.removeLayer(marker);
+      if (matches) visible.push(index);
+    });
+    result.textContent = `${visible.length}地点を表示`;
+    if (selectedSite != null && !visible.includes(selectedSite)) {
+      selectedSite = null;
+      rangeLayer.clearLayers();
+      detail.innerHTML = '<p class="detail-placeholder">絞り込み結果の地点を地図上で選択してください。</p>';
+      detail.classList.remove("open");
+    }
+    if (visible.length) {
+      map.fitBounds(L.latLngBounds(visible.map((index) => [D.records[index].latitude, D.records[index].longitude])).pad(0.18), { animate: false });
+    }
+  }
+  [siteFilter, speciesFilter, distanceFilter, preservationFilter].forEach((control) => control.addEventListener("input", applyFilters));
 
   function setTerrain(mode) {
     Object.values(terrainLayers).forEach((layer) => map.removeLayer(layer));
@@ -147,16 +262,33 @@
     document.querySelectorAll("[data-terrain]").forEach((button) => button.classList.toggle("active", button.dataset.terrain === mode));
     slopeLegend.classList.toggle("visible", mode === "slope");
   }
-
   document.querySelectorAll("[data-terrain]").forEach((button) => { button.onclick = () => setTerrain(button.dataset.terrain); });
-  document.getElementById("reset-view").onclick = () => map.flyToBounds(L.latLngBounds(allPoints).pad(0.18), { duration: 0.7 });
+
+  const registrySearch = document.getElementById("registry-search");
+  if (registrySearch) {
+    registrySearch.addEventListener("input", () => {
+      const query = registrySearch.value.trim().toLocaleLowerCase("ja");
+      document.querySelectorAll("[data-registry-item]").forEach((item) => {
+        item.hidden = Boolean(query) && !item.textContent.toLocaleLowerCase("ja").includes(query);
+      });
+    });
+  }
+
+  document.getElementById("reset-view").onclick = () => {
+    siteFilter.value = "";
+    speciesFilter.value = "";
+    distanceFilter.value = "";
+    preservationFilter.value = "";
+    applyFilters();
+  };
   document.getElementById("micro-view").onclick = () => {
-    const record = D.records[selected];
+    if (selectedSite == null) return;
+    const record = D.records[selectedSite];
     map.flyTo([record.latitude, record.longitude], 17, { duration: 0.6 });
   };
 
-  initList();
-  map.fitBounds(L.latLngBounds(allPoints).pad(0.18), { animate: false });
-  select(0, false);
+  const initial = D.records.findIndex((record) => record.has_mappable_location);
+  applyFilters();
+  if (initial >= 0) selectSite(initial, false);
   setTerrain(terrainMode);
 })();
