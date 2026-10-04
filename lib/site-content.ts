@@ -110,6 +110,13 @@ export type Activity = {
 
 export const activities: Activity[] = [
   {
+    title: "2026年9月 ニュースレター",
+    date: "2026.09",
+    category: "その他",
+    description: "一般社団法人の設立、FOSS4Gへの参加、被爆樹木マップ、ハンズオンイベントの予定、渋谷での交流をお届けします。",
+    link: "#newsletter-2026-09",
+  },
+  {
     title: "2026年8月 ニュースレター",
     date: "2026.08",
     category: "その他",
@@ -119,7 +126,77 @@ export const activities: Activity[] = [
   },
 ];
 
-export const augustNewsletter = {
+export type Newsletter = {
+  issue: string;
+  title: string;
+  lead: string[];
+  topics: {
+    title: string;
+    paragraphs: string[];
+    items?: string[];
+    link?: { href: string; label: string };
+  }[];
+  upcoming: string[];
+  upcomingNote?: string;
+  closing?: string[];
+};
+
+export const septemberNewsletter: Newsletter = {
+  issue: "2026.09",
+  title: "Youth GEO Japan ニュースレター 2026年9月号",
+  lead: [
+    "こんにちは！Youth GEO Japanです。",
+    "地理空間情報に興味のある若者たちが集まるコミュニティとして、日々活動しています。",
+    "今月の活動をご紹介します。",
+  ],
+  topics: [
+    {
+      title: "一般社団法人の設立",
+      paragraphs: [
+        "Youth GEO Japanは、一般社団法人として正式に設立しました。ここまでご協力いただいた皆さま、ありがとうございます！",
+        "これからも、地理をきっかけに学生や若手が興味を広げ、人や分野とつながれる場をつくっていきます。",
+      ],
+      link: { href: "/organization", label: "法人情報を見る" },
+    },
+    {
+      title: "FOSS4G 2026 Hiroshimaへの参加",
+      paragraphs: [
+        "メンバーがFOSS4G 2026 Hiroshimaに参加し、現地での交流や情報収集を行いました。",
+        "参加したメンバーの感想も、今後ご紹介できればと思います。",
+      ],
+    },
+    {
+      title: "被爆樹木マップでコンテストに応募",
+      paragraphs: [
+        "8月から進めていた樹木保護プロジェクトでは、被爆樹木マップを作成し、Geoアクティビティコンテストに応募しました。",
+        "被爆樹木の位置や状態、公開されている記録を地図で伝え、保全につなげる取り組みです。Webサイトの公開は今後予定しています。",
+      ],
+    },
+    {
+      title: "MapConductorハンズオンイベントの開催決定",
+      paragraphs: [
+        "FOSS4Gでご縁があったMapConductorの勝又さんを講師に迎え、11月25日（水）の夕方にハンズオンイベントを開催することが決まりました。",
+        "MapConductorは、Google MapsやMapLibreなど、異なる地図開発ツールを共通の書き方で扱えるようにする開発ツールです。今回のイベントでは、初めての方も実際に手を動かしながら地図開発を体験できる内容を予定しています。",
+        "運営・サポートメンバーも募集中です。興味のある方は、ぜひお気軽にご連絡ください！",
+      ],
+    },
+    {
+      title: "渋谷での少人数オフ会",
+      paragraphs: [
+        "9月10日には、広島から参加してくれているメンバーを交えて渋谷で少人数オフ会を開催しました。オンラインだけでなく、対面での交流も継続しています。",
+      ],
+    },
+  ],
+  upcoming: ["MapConductorハンズオンイベント（11月25日夕方）", "Podcastの公開（10月予定）"],
+  upcomingNote: "イベントの詳細やWebサイトの公開時期は、決まり次第お知らせします。",
+  closing: [
+    "Youth GEO Japan は、地理情報に興味のある若者ならどなたでも参加できるコミュニティです。",
+    "興味のある方は、ぜひDiscordサーバーへお越しください！",
+    "ご質問・ご参加希望はお気軽にどうぞ。",
+  ],
+};
+
+export const augustNewsletter: Newsletter = {
   issue: "2026.08",
   title: "Youth GEO Japan ニュースレター",
   lead: [

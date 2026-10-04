@@ -33,24 +33,13 @@ export default async function Home({ params }: HomeProps) {
     <>
       <HeroSection locale={lang} />
 
-      <div className="bg-white py-10 sm:py-12">
+      <div className="bg-white py-6 sm:py-8">
         <div className="page-shell">
-          <p className="mx-auto max-w-4xl text-lg leading-9 text-[#3e3a39]/80">{siteMeta.description}</p>
+          <p className="mx-auto max-w-5xl border-l-3 border-[#6bbc70] pl-5 text-base leading-[1.85] text-[#3e3a39]/85 sm:pl-6 sm:text-[1.0625rem]">{siteMeta.description}</p>
         </div>
       </div>
 
-      <section className="section-pad bg-[#F7F3ED]">
-        <div className="page-shell">
-          <div className="mx-auto max-w-4xl">
-            <SectionHeading eyebrow="WHY YOUTH GEO JAPAN?" title={pages.why.title} />
-            <div className="mt-7 space-y-5 text-lg leading-9 text-[#3e3a39]/80">
-              {pages.why.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-pad bg-white">
+      <section className="bg-[#F7F3ED] py-8 sm:py-10 lg:py-12">
         <div className="page-shell">
           <SectionHeading eyebrow="ACTIVITIES" title={pages.activityTitle} />
           <div className="mt-6 flex flex-wrap gap-2">

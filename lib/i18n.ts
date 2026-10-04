@@ -1,6 +1,8 @@
 import {
   activities,
   augustNewsletter,
+  septemberNewsletter,
+  type Newsletter,
   contactInfo,
   homeContent,
   navItems,
@@ -47,7 +49,7 @@ const ja = {
     activitiesPageDescription:
       "勉強会やイベント、メンバー同士の交流など、Youth GEO Japanの歩みを月ごとにお届けします。",
     articleList: "記事一覧",
-    issueContents: "8月号の目次",
+    issueContents: "この号の目次",
     upcoming: "今後の予定",
     partnersTitle: "地理への好奇心から、将来の道を描ける環境をともにつくる",
     partnerContact: "協力について問い合わせる",
@@ -151,6 +153,13 @@ const en = {
   },
   activities: [
     {
+      title: "September 2026 Newsletter",
+      date: "2026.09",
+      category: "Other",
+      description: "Our incorporation, FOSS4G participation, an atomic-bomb-survivor tree map, an upcoming hands-on event, and a meetup in Shibuya.",
+      link: "#newsletter-2026-09",
+    },
+    {
       title: "August 2026 Newsletter",
       date: "2026.08",
       category: "Other",
@@ -159,6 +168,60 @@ const en = {
       link: "#newsletter-2026-08",
     },
   ],
+  septemberNewsletter: {
+    issue: "2026.09",
+    title: "Youth GEO Japan Newsletter — September 2026",
+    lead: [
+      "Hello from Youth GEO Japan!",
+      "We are a community of young people interested in geospatial information, with activities taking place throughout the month.",
+      "Here is a look at this month’s activities.",
+    ],
+    topics: [
+      {
+        title: "Establishment of our general incorporated association",
+        paragraphs: [
+          "Youth GEO Japan has officially been established as a general incorporated association. Thank you to everyone who has supported us along the way!",
+          "We will continue creating a place where students and young professionals can broaden their interests through geography and connect with people and different fields.",
+        ],
+        link: { href: "/organization", label: "View corporate information" },
+      },
+      {
+        title: "Participation in FOSS4G 2026 Hiroshima",
+        paragraphs: [
+          "Members attended FOSS4G 2026 Hiroshima to meet people and gather information on site.",
+          "We hope to share their reflections in the future.",
+        ],
+      },
+      {
+        title: "Entering a contest with an atomic-bomb-survivor tree map",
+        paragraphs: [
+          "Our tree conservation project, which began in August, created a map of atomic-bomb-survivor trees and entered the Geo Activity Contest.",
+          "The project communicates the trees’ locations, conditions, and publicly available records through a map to support conservation. The website is planned for future publication.",
+        ],
+      },
+      {
+        title: "A MapConductor hands-on event is confirmed",
+        paragraphs: [
+          "Mr. Katsumata from MapConductor, whom we met through FOSS4G, will lead a hands-on event on the evening of Wednesday, November 25.",
+          "MapConductor is a development tool that lets developers work with different mapping tools, such as Google Maps and MapLibre, using a common coding approach. The event will offer a practical introduction to map development, including for beginners.",
+          "We are also looking for organizing and support members. Please get in touch if you are interested!",
+        ],
+      },
+      {
+        title: "A small meetup in Shibuya",
+        paragraphs: [
+          "On September 10, we held a small meetup in Shibuya with a member visiting from Hiroshima. Alongside online exchanges, we continue to meet in person.",
+        ],
+      },
+    ],
+    upcoming: ["MapConductor hands-on event (evening of November 25)", "Podcast release (planned for October)"],
+    upcomingNote: "We will announce event details and the website publication schedule as soon as they are confirmed.",
+    closing: [
+      "Youth GEO Japan welcomes any young person interested in geographic information.",
+      "If you are interested, please join our Discord server!",
+      "Questions and requests to join are always welcome.",
+    ],
+  },
   augustNewsletter: {
     issue: "2026.08",
     title: "Youth GEO Japan Newsletter",
@@ -272,7 +335,7 @@ const en = {
     activitiesPageDescription:
       "Follow Youth GEO Japan’s journey through our study sessions, events, and community gatherings.",
     articleList: "Issues",
-    issueContents: "Contents of the August issue",
+    issueContents: "Contents of this issue",
     upcoming: "What’s next",
     partnersTitle: "Building pathways from geographic curiosity—together",
     partnerContact: "Contact us about collaborating",
@@ -371,8 +434,12 @@ const englishPageContent: typeof pageContent = {
 };
 
 export function getDictionary(locale: Locale) {
+  const newsletters: Newsletter[] = locale === "en"
+    ? [en.septemberNewsletter, en.augustNewsletter]
+    : [septemberNewsletter, augustNewsletter];
   return {
     ...(locale === "en" ? en : ja),
     pages: locale === "en" ? englishPageContent : pageContent,
+    newsletters,
   };
 }
