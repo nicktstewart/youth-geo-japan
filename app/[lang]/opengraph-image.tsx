@@ -1,10 +1,14 @@
 import { ImageResponse } from "next/og";
+import { getDictionary, hasLocale } from "@/lib/i18n";
 
 export const alt = "Youth GEO Japan — Geography and GIS youth community in Japan";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpenGraphImage() {
+export default async function OpenGraphImage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const locale = hasLocale(lang) ? lang : "ja";
+  const { siteMeta } = getDictionary(locale);
   return new ImageResponse(
     (
       <div
@@ -33,7 +37,7 @@ export default function OpenGraphImage() {
         />
         <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
           <div style={{ color: "#6A5748", display: "flex", fontSize: 28, fontWeight: 600 }}>
-            GEOGRAPHY · GIS · GEOSPATIAL LEARNING
+            GEOGRAPHY · CONNECTIONS · POSSIBILITIES
           </div>
           <div
             style={{
@@ -47,7 +51,7 @@ export default function OpenGraphImage() {
             Youth GEO Japan
           </div>
           <div style={{ display: "flex", fontSize: 34, lineHeight: 1.4, marginTop: "24px" }}>
-            地理とGISを学び、つながり、未来をつくる若者コミュニティ
+            {siteMeta.tagline}
           </div>
         </div>
       </div>

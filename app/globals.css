@@ -363,6 +363,51 @@ a {
   animation: fade-up 700ms ease both;
 }
 
+/* Clockwise on desktop; retain the reading order on narrow screens. */
+.approach-loop {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+}
+
+.approach-node {
+  position: relative;
+}
+
+.approach-node::after {
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  color: #6a5748;
+  font-size: 1.5rem;
+  content: "↓";
+  transform: translateX(-50%);
+}
+
+.approach-node-4::after {
+  content: "↻";
+}
+
+@media (min-width: 48rem) {
+  .approach-loop {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+
+  .approach-node-3 { grid-column: 2; grid-row: 2; }
+  .approach-node-4 { grid-column: 1; grid-row: 2; }
+  .approach-node-1::after {
+    content: "→";
+    left: auto; right: -1.55rem; top: 45%; bottom: auto; transform: none;
+  }
+  .approach-node-2::after { content: "↓"; }
+  .approach-node-3::after {
+    content: "←";
+    left: -1.55rem; top: 45%; bottom: auto; transform: none;
+  }
+  .approach-node-4::after { content: "↑"; top: -2rem; bottom: auto; }
+}
+
 .float-orb {
   animation: float 9s ease-in-out infinite;
 }

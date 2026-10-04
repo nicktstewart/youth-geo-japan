@@ -26,20 +26,19 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           </p>
         </div>
         <nav className="grid gap-2 text-sm" aria-label={ui.footerNavLabel}>
-          {navItems.map((item) => (
+          {navItems.filter((item) => ["/about", "/organization"].includes(item.href)).map((item) => (
             <Link
               key={item.href}
               href={localePath(locale, item.href)}
               className="flex min-h-11 items-center text-white/72 hover:text-white"
             >
-              {item.label}
+              {item.href === "/organization" && locale === "ja" ? "Organization / 法人情報" : item.label}
             </Link>
           ))}
         </nav>
         <div className="text-sm leading-7 text-white/72">
-          <p>Contact</p>
           <a className="inline-flex min-h-11 items-center hover:text-white" href={`mailto:${contactInfo.email}`}>
-            {contactInfo.email}
+            Contact
           </a>
         </div>
       </div>

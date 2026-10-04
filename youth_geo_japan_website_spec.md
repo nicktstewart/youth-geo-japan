@@ -32,12 +32,16 @@ Next.js はバージョン差分の影響が大きいため、実装前に `node
 
 | 日本語Path    | 英語Path         | Page       | 役割                                                             |
 | ------------- | ---------------- | ---------- | ---------------------------------------------------------------- |
-| `/`           | `/en`            | Home       | 団体の概要、Vision、活動内容、ストーリー、参加案内、メンバー紹介 |
+| `/`           | `/en`            | Home       | 団体の概要、WHY、活動報告・最新NEWS、参加案内 |
+| `/about`      | `/en/about`      | About      | 既存のストーリー、活動の考え方と文章入りの循環図 |
 | `/activities` | `/en/activities` | Activities | 活動実績・予定を表示                                             |
 | `/partners`   | `/en/partners`   | Partners   | 企業・団体・社会人向けの協力案内                                 |
-| `/contact`    | `/en/contact`    | Contact    | 参加・協力・問い合わせ用の連絡先                                 |
+| `/join`       | `/en/join`       | Join       | Discordへの参加、LINEでの情報受信とQRコード |
+| `/organization` | `/en/organization` | Organization | 法人概要、その下に代表者メッセージ |
 
-保存済みの言語選択がなければ、ブラウザが送る優先言語（通常はOSまたはブラウザの言語設定）を使い、日本語なら日本語、それ以外なら英語を初期表示します。ヘッダーの言語切り替えで選んだ言語は Cookie に1年間保存し、次回以降はブラウザ設定より優先します。言語切り替えは対象言語への通常の Next.js `Link` で行い、APIへのPOSTや `router.refresh()` は使いません。ヘッダーには主要ページへの導線、フッターには主要ページとメールアドレスがあります。
+Contactページは廃止し、旧URLは対応する言語のJoinページへ308リダイレクトします。ヘッダーはHome、About、Activities、Partners、法人情報、参加ボタン。フッターはAbout、法人情報、メールへのContactリンクです。
+
+保存済みの言語選択がなければ、ブラウザが送る優先言語（通常はOSまたはブラウザの言語設定）を使い、日本語なら日本語、それ以外なら英語を初期表示します。ヘッダーの言語切り替えで選んだ言語は Cookie に1年間保存し、次回以降はブラウザ設定より優先します。現在の言語切り替えは`/api/locale`へのPOSTでCookieを保存してから、対象言語へ移動します。保存に失敗した場合は明示的な言語URLへ移動します。
 
 ## 4. ディレクトリ構成
 
@@ -48,8 +52,10 @@ app/
     page.tsx
     activities/page.tsx
     partners/page.tsx
-    contact/page.tsx
-  api/locale/route.ts  # 旧言語保存API。現在のスイッチャーからは未使用
+    about/page.tsx
+    join/page.tsx
+    organization/page.tsx
+  api/locale/route.ts  # 表示言語をCookieへ保存するAPI
   globals.css
 
 components/
@@ -123,13 +129,15 @@ export const siteColors = {
 
 Home はサイトの最初の入口です。以下のセクションで構成します。
 
-- Hero: 団体名、タグライン、ロゴ、Contact / Activities への導線
-- Vision: 団体の目指すもの
-- Our Approach: 「知る」「考える」「形にする」「繋がる」の考え方
-- What We Do: 主な活動カテゴリ
-- Our Story: 団体の背景や問題意識
-- Join Us: 参加案内
-- Members: メンバー紹介
+- ページ最上部: 団体名、「好奇心を、まっすぐ未来へ。」、ロゴ、参加ボタン
+- 団体紹介: 最上部とは別の通常の文章として掲載
+- WHY YOUTH GEO JAPAN?: 「“地理好き”は、未来を拓くハブになる」
+- Activities: 小さな活動タグと、Activitiesと共通データの最新ニュース。全活動へのリンクはページ先頭へ、ニュースリンクは該当記事へ移動
+- Join Us: 現在の募集文を保ち、参加ページへ案内
+
+### About
+
+既存のOur Story全文とOur Approachを掲載します。Vision、Community、法人情報の案内セクションは置きません。Approachの4つの枠には「知る」「考える」「形にする」「繋がる」の説明を入れ、PCでは時計回り、スマホでは順に下へ読み進める循環図にします。
 
 ### Activities
 
@@ -156,31 +164,34 @@ export type Activity = {
 
 掲載する内容:
 
-- 協力対象者
 - 講演・イベント登壇
 - 勉強会・ハッカソン協力
 - キャリア相談・メンタリング
 - 協賛・共同企画
-- Contact への導線
+- メールへの問い合わせリンクとメールアドレス
 
-### Contact
+### Join
 
-参加希望者、協力希望者、問い合わせをしたい人に向けたページです。
+参加希望者向けにDiscordの招待リンクを掲載します。情報だけを受け取りたい人やDiscordに馴染みがない人にはLINEオープンチャットのリンクと実際に読み取れるQRコードを案内します。
 
 現在の連絡先は `lib/site-content.ts` の `contactInfo` で管理します。
 
 ```ts
 export const contactInfo = {
   email: "contact@youthgeojp.com",
-  lineQrImage: "/line-qr.png",
-  discordInviteUrl: "",
+  lineQrImage: "/line-openchat-qr.svg",
+  discordInviteUrl: "https://discord.gg/yNfSucpfGv",
   xUrl: "",
   instagramUrl: "",
   linkedinUrl: "",
 };
 ```
 
-未設定の SNS や Discord URL は、実際に公開できる状態になってから表示する方針です。
+未設定のSNSは表示しません。QRコードとLINEのリンクは同じURLを指すように更新します。
+
+### Organization
+
+法人概要を上に、代表者メッセージを下に配置します。法人概要は名称、設立年月日、所在地、代表者、定款に基づく事業内容の要約、メールアドレスを掲載します。登記情報などの共通値は`organizationInfo`で管理し、Organization JSON-LDにも反映します。
 
 ## 8. メタデータとアクセシビリティ
 
@@ -215,7 +226,7 @@ Next.js 16 の開発用生成型は `.next/dev`、本番用生成型は `.next/t
 
 - 文字化けしている本文を、正しい日本語に直す
 - Activities に実際の活動実績を追加する
-- Contact に Discord、SNS、LINE QR などを追加する
+- 公開可能なSNSの追加を検討する
 - 文章データをさらに `lib/site-content.ts` に集約する
 - 活動カード用の共通コンポーネントを追加する
 - README にスクリーンショットを追加する

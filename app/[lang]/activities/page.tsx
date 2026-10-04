@@ -159,7 +159,7 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
                 ))}
               </nav>
             </div>
-            <Link className="btn-primary mt-5 w-full" href={localePath(lang, "/contact")}>
+            <Link className="btn-primary mt-5 w-full" href={localePath(lang, "/join")}>
               {ui.joinActivities}
             </Link>
           </aside>

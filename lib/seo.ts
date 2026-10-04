@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import type { Locale } from "@/lib/i18n";
+import { organizationInfo } from "@/lib/site-content";
 
 const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://youthgeojp.com";
 
 export const siteUrl = new URL(configuredSiteUrl);
 export const siteOrigin = siteUrl.origin;
 
-export const indexableRoutes = ["/", "/activities", "/partners", "/contact"] as const;
+export const indexableRoutes = ["/", "/about", "/activities", "/partners", "/join", "/organization"] as const;
 
 export function localizedUrl(locale: Locale, pathname: string) {
   const path = pathname === "/" ? "" : pathname;
@@ -76,6 +77,15 @@ export function organizationJsonLd(locale: Locale, description: string) {
         "@type": "Organization",
         "@id": `${siteOrigin}/#organization`,
         name: "Youth GEO Japan",
+        legalName: organizationInfo.legalName,
+        foundingDate: organizationInfo.foundingDate,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: organizationInfo.streetAddress,
+          postalCode: organizationInfo.postalCode,
+          addressCountry: "JP",
+        },
+        founder: { "@type": "Person", name: organizationInfo.representative },
         alternateName: ["Youth Geo Japan", "YGJ"],
         url: siteOrigin,
         logo: {

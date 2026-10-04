@@ -5,7 +5,7 @@ import { MobileNavigation } from "@/components/MobileNavigation";
 import { getDictionary, localePath, type Locale } from "@/lib/i18n";
 
 export function SiteHeader({ locale }: { locale: Locale }) {
-  const { navItems, ui } = getDictionary(locale);
+  const { navItems, ui, pages } = getDictionary(locale);
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#6A5748]/10 bg-[#F7F3ED]/92 backdrop-blur">
@@ -28,21 +28,21 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           <span className="truncate text-sm sm:text-base">Youth GEO Japan</span>
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label={ui.headerNavLabel}>
+        <nav className="hidden items-center gap-1 lg:flex" aria-label={ui.headerNavLabel}>
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={localePath(locale, item.href)}
-              className="rounded-full px-4 py-2 text-sm font-medium text-[#3e3a39]/78 transition hover:bg-white hover:text-[#3e3a39]"
+              className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-[#3e3a39]/78 transition hover:bg-white hover:text-[#3e3a39]"
             >
               {item.label}
             </Link>
           ))}
           <Link
-            href={localePath(locale, "/contact")}
+            href={localePath(locale, "/join")}
             className="ml-2 rounded-full bg-[#6bbc70] px-5 py-2 text-sm font-semibold text-[#1f2d1f] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#7dcc82]"
           >
-            Contact
+            {pages.joinLabel}
           </Link>
           <div className="ml-2">
             <LanguageSwitcher locale={locale} label={ui.languageLabel} />
@@ -51,7 +51,8 @@ export function SiteHeader({ locale }: { locale: Locale }) {
 
         <MobileNavigation
           closeLabel={locale === "ja" ? "ナビゲーションを閉じる" : "Close navigation"}
-          contactHref={localePath(locale, "/contact")}
+          joinHref={localePath(locale, "/join")}
+          joinLabel={pages.joinLabel}
           locale={locale}
           languageLabel={ui.languageLabel}
           navItems={navItems.map((item) => ({

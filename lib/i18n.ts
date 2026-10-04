@@ -4,6 +4,7 @@ import {
   contactInfo,
   homeContent,
   navItems,
+  pageContent,
   partnerAudiences,
   partnerHeroCopy,
   partnerOptions,
@@ -77,14 +78,16 @@ const ja = {
 const en = {
   navItems: [
     { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
     { label: "Activities", href: "/activities" },
     { label: "Partners", href: "/partners" },
+    { label: "Organization", href: "/organization" },
   ],
   siteMeta: {
     name: "Youth GEO Japan",
     tagline: "Curiosity, straight into the future.",
     description:
-      "Youth GEO Japan is a learning community where young people in Japan explore geography, GIS, and geospatial information, teach one another, and address social and local challenges.",
+      "Youth GEO Japan is a community where young people discover their connections with geography, meet peers and people working in the geospatial field, and turn their interests into learning, careers, and practical experience.",
   },
   homeContent: {
     vision: {
@@ -297,6 +300,79 @@ const en = {
   },
 };
 
+const englishPageContent: typeof pageContent = {
+  joinLabel: "Join",
+  why: {
+    title: "A passion for geography can become a hub for the future",
+    paragraphs: [
+      "Geography connects with many fields, including the natural environment, cities, urban development, disaster prevention, tourism, international cooperation, and defense. We see geography not only as an independent discipline, but also as a perspective for understanding society, places, and the world.",
+      "That is why curiosity about geography has the power to transform society and open up the future.",
+      "Youth GEO Japan brings together young people interested in geography and related fields, creating an environment where they can discover their connections with geography and develop their interests into learning and careers.",
+      "Through geography—a perspective that holds a key to understanding today’s world—we aim to empower young people to exercise leadership and create positive change in society.",
+    ],
+  },
+  activityTitle: "Activity reports",
+  activityTags: ["Study sessions", "Lightning talks", "Fieldwork", "Career advice", "In-person meetups", "Business competitions"],
+  moreActivities: "View more activities",
+  about: {
+    title: "About Youth GEO Japan",
+    description: "Discover the ideas behind Youth GEO Japan and our approach to turning curiosity about geography into practical work in society and local communities.",
+    storyTitle: "Our story",
+    approachParagraphs: [
+      "We go beyond learning about geography, connecting the perspectives and knowledge we gain with practical work in society and local communities.",
+      "By creating a cycle of discovering, thinking, creating, and connecting, we help young people take the first step toward applying their geographic curiosity in society.",
+      "We provide a place where members can pursue their curiosity while collaborating with people from diverse backgrounds.",
+    ],
+    thinkDescription: "Through talks and events with government, industry, and academia, we explore the connections between geographic curiosity and social challenges, offering perspectives that help members consider study and career paths that suit them.",
+  },
+  join: {
+    title: "Join Youth GEO Japan",
+    description: "Join the Youth GEO Japan community on Discord, or receive activity updates through our LINE OpenChat if you would like to learn more before joining.",
+    lead: ["Your year of study, field, experience, and skills do not matter. Whether you love geography, are interested in GIS, or want to create something with others…", "You are welcome here!"],
+    discordTitle: "Join the community",
+    discordBody: ["If you would like to meet fellow members or take part in study sessions and projects, join us on Discord.", "We use Discord for everyday conversations, questions, information sharing, and planning activities."],
+    discordButton: "Join on Discord",
+    lineTitle: "Start with activity updates",
+    lineBody: ["If you are interested but would like to consider joining later, or are unfamiliar with Discord, try our LINE OpenChat.", "Receive Youth GEO Japan updates, including announcements about events."],
+    lineButton: "Join the LINE OpenChat",
+    qrAlt: "QR code for joining the Youth GEO Japan LINE OpenChat",
+  },
+  partners: {
+    title: "To everyone supporting Youth GEO Japan",
+    paragraphs: ["Youth GEO Japan connects young people with companies and organizations, creating an environment where geographic curiosity can help shape future paths.", "If you would like to support our work, please get in touch by email."],
+  },
+  organization: {
+    title: "Organization",
+    description: "Learn about Youth GEO Japan’s incorporated association, including its establishment, address, representative, activities, and a message from its representative director.",
+    profileTitle: "Corporate profile",
+    labels: { name: "Legal name", founded: "Established", address: "Address", representative: "Representative", business: "Activities", contact: "Contact" },
+    legalName: "一般社団法人　Youth GEO Japan (General Incorporated Association)",
+    foundingDate: "September 14, 2026",
+    address: "Futaba Building 8b, 1-16-6 Dogenzaka, Shibuya-ku, Tokyo, Japan",
+    representative: "Yuka Yano, Representative Director",
+    businesses: [
+      "Operating a community where students and young professionals interested in geospatial information can learn, connect, and collaborate",
+      "Providing grants and support for students’ and young professionals’ learning, research, and activities",
+      "Planning and running study sessions, talks, meetups, and other events",
+      "Promoting cooperation with related organizations, educational and research institutions, government agencies, and companies in Japan and overseas",
+      "Developing initiatives that advance awareness and development of the geospatial field, and other activities needed to fulfill the association’s purpose",
+    ],
+    messageTitle: "Message from the representative",
+    messageHeading: "Connecting an interest in geography with future possibilities",
+    messageParagraphs: [
+      "I founded Youth GEO Japan after experiencing both the appeal of geography’s breadth and the difficulty of connecting that interest with education and careers.",
+      "What research and jobs can studying geography lead to? Which field suits me? What knowledge and skills should I develop? Precisely because geography opens so many possibilities, it can be difficult to decide which direction to take.",
+      "People interested in cities, disaster prevention, the environment, transport, tourism, international cooperation, or data analysis also have few opportunities to discover how their interests connect with geography.",
+      "These experiences led me to want to create a place where young people can discover their connections with geography, learn about the people and work beyond it, and move toward practical involvement.",
+      "Connecting with fellow students. Meeting researchers, engineers, and people working in companies and government. Learning about further study, research, employment, events, and communities. Developing knowledge, skills, and experience through practical projects.",
+      "I want Youth GEO Japan to be a place where young people’s curiosity leads to their next step.",
+    ],
+  },
+};
+
 export function getDictionary(locale: Locale) {
-  return locale === "en" ? en : ja;
+  return {
+    ...(locale === "en" ? en : ja),
+    pages: locale === "en" ? englishPageContent : pageContent,
+  };
 }

@@ -56,10 +56,12 @@ app/
   [lang]/               日本語・英語のページ
     layout.tsx          全ページ共通のレイアウト、ヘッダー、フッター、メタデータ
     page.tsx            Home ページ
+    about/page.tsx      About ページ
     activities/page.tsx Activities ページ
     partners/page.tsx   Partners ページ
-    contact/page.tsx    Contact ページ
-  api/locale/route.ts   旧言語保存API（現在のスイッチャーからは未使用）
+    join/page.tsx       参加ページ（Discord / LINE / QR）
+    organization/page.tsx 法人情報・代表者メッセージ
+  api/locale/route.ts   表示言語を Cookie に保存する API
   globals.css           全体の CSS と Tailwind CSS の設定
 
 components/
@@ -88,13 +90,15 @@ public/
 - 内容を追加・変更するときは、両方の言語を同時に更新してください。
 - ページ内に直接書かれている文言も少しあります。その場合は `app/` または `components/` の該当ファイルを修正します。
 - コンテンツ変更時は [SEO・AIO 運用ガイド](./docs/seo-aio-guide.md) も確認し、metadata と sitemap の `lastmod` を内容と同時に保守してください。特に Activities の更新では `app/sitemap.ts` の `"/activities"` の日付更新が必須です。
+- Home の WHY、About、参加、法人情報の日本語は `lib/site-content.ts` の `pageContent`、英語は `lib/i18n.ts` の `englishPageContent` にあります。法人の共通情報は `organizationInfo`、Discord / LINE のリンクは `contactInfo` で管理します。
+- 旧 Contact ページは廃止し、`/contact`、`/ja/contact`、`/en/contact` はそれぞれ参加ページへ恒久リダイレクトします。協力・問い合わせはメールへのリンクで案内します。
 
 ## 表示言語とURL
 
 - 保存済みの選択がなければ、ブラウザが送る優先言語（通常はOSまたはブラウザの言語設定）を使います。日本語なら `/`、`/activities` などで日本語を表示し、それ以外なら `/en`、`/en/activities` などの英語ページへ移動します。
 - ヘッダーの `日本語 / English` で手動変更した言語は、端末の Cookie に1年間保存され、次回以降はブラウザ設定より優先されます。サイトデータを消すと自動判定に戻ります。
-- 言語切り替えは通常の Next.js `Link` で対象言語の静的ページへ直接移動します。`/api/locale` への POST、`router.refresh()`、ページ全体の再読み込みは行いません。
-- Cookie はサーバー側の `proxy.ts` でも読めるため、`localStorage` と違って初回描画後に言語が変わるちらつきを避けられます。この仕組みはデスクトップとモバイルで共通です。
+- 言語切り替えは `/api/locale` で Cookie を保存してから対象言語のページへ移動します。保存に失敗した場合は `/ja` または `/en` の明示的な言語URLへ移動します。
+- Cookie はサーバー側の `proxy.ts` でも読めるため、初回表示から保存済みの言語を選べます。この仕組みはデスクトップとモバイルで共通です。
 
 画像を差し替える場合:
 

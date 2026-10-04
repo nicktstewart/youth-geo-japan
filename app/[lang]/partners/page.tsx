@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PartnerOptionCard } from "@/components/PartnerOptionCard";
 import { SectionHeading } from "@/components/SectionHeading";
-import { getDictionary, hasLocale, localePath } from "@/lib/i18n";
+import { getDictionary, hasLocale } from "@/lib/i18n";
 import { createPageMetadata } from "@/lib/seo";
 
 type PartnersPageProps = { params: Promise<{ lang: string }> };
@@ -11,7 +10,7 @@ type PartnersPageProps = { params: Promise<{ lang: string }> };
 export async function generateMetadata({ params }: PartnersPageProps): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
-  const { partnerHeroCopy } = getDictionary(lang);
+  const { pages } = getDictionary(lang);
   return createPageMetadata({
     locale: lang,
     pathname: "/partners",
@@ -19,41 +18,33 @@ export async function generateMetadata({ params }: PartnersPageProps): Promise<M
       lang === "ja"
         ? "企業・教育機関との協力 | 地理・GISと若者をつなぐ"
         : "Partnerships | Connecting Youth, Geography, and GIS",
-    description: partnerHeroCopy,
+    description: pages.partners.paragraphs.join(" "),
   });
 }
 
 export default async function PartnersPage({ params }: PartnersPageProps) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
-  const { partnerAudiences, partnerHeroCopy, partnerOptions, ui } = getDictionary(lang);
+  const { pages, contactInfo, partnerOptions, ui } = getDictionary(lang);
 
   return (
     <>
       <section className="section-pad bg-[#F7F3ED]">
-        <div className="page-shell grid gap-10 lg:grid-cols-[1fr_0.85fr]">
+        <div className="page-shell">
           <div>
             <SectionHeading
               eyebrow="Partners"
               as="h1"
-              title={ui.partnersTitle}
-              description={partnerHeroCopy}
+              title={pages.partners.title}
             />
-            <Link className="btn-primary mt-8" href={localePath(lang, "/contact")}>
+            <div className="mt-6 max-w-3xl space-y-4 text-lg leading-8 text-[#3e3a39]/78">
+              {pages.partners.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            </div>
+            <a className="btn-primary mt-8" href={`mailto:${contactInfo.email}`}>
               {ui.partnerContact}
-            </Link>
+            </a>
+            <p className="mt-4"><a className="break-all text-[#6A5748] hover:underline" href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a></p>
           </div>
-          <aside className="card-soft bg-white">
-            <h2 className="text-xl font-semibold text-[#3e3a39]">{ui.audiences}</h2>
-            <ul className="mt-5 space-y-4">
-              {partnerAudiences.map((audience) => (
-                <li key={audience} className="flex gap-3 text-base leading-7 text-[#3e3a39]/76">
-                  <span className="mt-2 size-2 shrink-0 rounded-full bg-[#6bbc70]" />
-                  <span>{audience}</span>
-                </li>
-              ))}
-            </ul>
-          </aside>
         </div>
       </section>
 

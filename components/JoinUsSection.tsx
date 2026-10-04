@@ -3,43 +3,29 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { getDictionary, localePath, type Locale } from "@/lib/i18n";
 
 export function JoinUsSection({ locale }: { locale: Locale }) {
-  const { pdfSupplementContent, ui } = getDictionary(locale);
+  const { pdfSupplementContent, pages } = getDictionary(locale);
 
   return (
     <section className="section-pad bg-[#F7F3ED]">
       <div className="page-shell">
         <article className="card-soft overflow-hidden bg-white">
-          <div className="grid gap-8 lg:grid-cols-[1fr_0.85fr] lg:items-center">
+          <div className="max-w-4xl">
             <div>
               <SectionHeading
-                eyebrow="Join Us!!"
-                title={`${pdfSupplementContent.join.title} ${pdfSupplementContent.join.subtitle}`}
+                eyebrow="JOIN US"
+                title={pdfSupplementContent.join.title}
               />
+              <h3 className="mt-5 text-xl font-semibold text-[#6A5748]">{pdfSupplementContent.join.subtitle}</h3>
               <p className="mt-7 text-base leading-8 text-[#3e3a39]/78">
                 {pdfSupplementContent.join.body}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link className="btn-primary" href={localePath(locale, "/contact")}>
-                  Contact
-                </Link>
-                <Link className="btn-secondary" href={localePath(locale, "/activities")}>
-                  {ui.viewActivities}
+                <Link className="btn-primary" href={localePath(locale, "/join")}>
+                  {pages.joinLabel}
                 </Link>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-[#6bbc70]/25 bg-[#eaf7f0] p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6A5748]">
-                Activities
-              </p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {pdfSupplementContent.activityTags.map((tag) => (
-                  <span key={tag} className="badge">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
           </div>
         </article>
       </div>

@@ -1,14 +1,16 @@
 export const navItems = [
   { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
   { label: "Activities", href: "/activities" },
   { label: "Partners", href: "/partners" },
+  { label: "法人情報", href: "/organization" },
 ];
 
 export const siteMeta = {
   name: "Youth GEO Japan",
   tagline: "好奇心を、まっすぐ未来へ。",
   description:
-    "Youth GEO Japanは、日本の若者が地理・GIS・地理空間情報を学び、教え合い、社会や地域の課題に挑戦する学習コミュニティです。",
+    "Youth GEO Japanは、若者が自分と地理との接点を見つけ、同じ関心を持つ仲間や地理空間分野で活動する人とつながり、その興味を学びやキャリア、実践へつなげていくためのコミュニティです。",
 };
 
 export const homeContent = {
@@ -230,9 +232,87 @@ export const contactInfo = {
   email: "contact@youthgeojp.com",
   lineOpenChatUrl:
     "https://line.me/ti/g2/mE9lbLlg3tsPsex_QvgZl77WnKGEhQEV9Rvl9w",
-  lineQrImage: "/line-qr.png",
-  discordInviteUrl: "",
+  lineQrImage: "/line-openchat-qr.svg",
+  discordInviteUrl: "https://discord.gg/yNfSucpfGv",
   xUrl: "",
   instagramUrl: "",
   linkedinUrl: "",
+};
+
+export const organizationInfo = {
+  legalName: "一般社団法人　Youth GEO Japan",
+  foundingDate: "2026-09-14",
+  postalCode: "150-0043",
+  streetAddress: "東京都渋谷区道玄坂1-16-6 二葉ビル8b",
+  representative: "矢野由佳",
+};
+
+export const pageContent = {
+  joinLabel: "参加",
+  why: {
+    title: "“地理好き”は、未来を拓くハブになる",
+    paragraphs: [
+      "地理は、自然環境、都市、まちづくり、防災、観光、国際協力、防衛など、さまざまな分野とつながっています。私たちは、地理を一つの独立した学問としてだけではなく、社会や地域、世界を捉えるための視点の一つだと考えています。",
+      "だからこそ、地理への好奇心は、社会を変え、未来を拓く力になります。",
+      "Youth GEO Japanは、地理やその周辺分野に関心を持つ若者が集まり、自分と地理との接点を見つけ、その興味を学びやキャリアにつなげていける環境をつくることを目的としています。",
+      "そして、“地理”という現代社会の鍵を握る視点を通して、若者がリーダーシップを発揮し、社会へポジティブな変化をもたらすことを目指しています。",
+    ],
+  },
+  activityTitle: "活動報告",
+  activityTags: ["勉強会", "LT会", "フィールドワーク", "就職相談", "対面交流会", "ビジネスコンテストへの参加"],
+  moreActivities: "活動をもっと見る",
+  about: {
+    title: "Youth GEO Japanについて",
+    description: "Youth GEO Japanの想いと、地理への好奇心を社会や地域での実践につなげる活動の考え方を紹介します。",
+    storyTitle: "私たちの想い",
+    approachParagraphs: [
+      "私たちは、地理を学ぶことにとどまらず、そこで得た視点や知識を、社会や地域での実践につなげていきます。",
+      "「知る」「考える」「形にする」「繋がる」を循環させることで、若者の地理に対する好奇心を社会へ活かす一歩を支えます。",
+      "多様なバックグラウンドの仲間と協働しながら、好奇心を追求できる環境を提供します。",
+    ],
+    thinkDescription: "政府機関・企業・アカデミアなどによる講演会やイベントを通して、地理への好奇心と社会課題とのつながりを考え、自分に合った進学やキャリアを考える視点を提供します。",
+  },
+  join: {
+    title: "Youth GEO Japanに参加する",
+    description: "DiscordでYouth GEO Japanのコミュニティに参加できます。まずは活動情報を受け取りたい方には、LINEオープンチャットをご案内しています。",
+    lead: ["学年や専門、経験、スキルは問いません。地理が好き、GISに興味がある、仲間と一緒に何かやってみたい…", "そんな気持ちがあれば大歓迎です！"],
+    discordTitle: "コミュニティに参加する",
+    discordBody: ["仲間と交流したり、勉強会やプロジェクトに参加したりしたい方は、Discordへ。", "日々の会話や相談、情報共有、企画の相談などを、Discordで気軽に行っています。"],
+    discordButton: "Discordで参加する",
+    lineTitle: "まずは活動情報を受け取る",
+    lineBody: ["興味はあるけれど、参加はもう少し先に考えたい方や、Discordに馴染みのない方は、LINEオープンチャットへ。", "イベントのお知らせなど、Youth GEO Japanの情報を気軽に受け取れます。"],
+    lineButton: "LINEオープンチャットに参加する",
+    qrAlt: "LINEオープンチャット参加用QRコード",
+  },
+  partners: {
+    title: "Youth GEO Japanを支援してくださる皆様へ",
+    paragraphs: ["Youth GEO Japanでは、企業や団体と若者のネットワークを築き、若者が地理への好奇心から将来の道を描ける環境を提供します。", "ご協力いただける方は、ぜひメールにてお問い合わせください。"],
+  },
+  organization: {
+    title: "法人情報",
+    description: "一般社団法人Youth GEO Japanの法人概要、設立年月日、所在地、代表者、事業内容、代表者メッセージをご紹介します。",
+    profileTitle: "法人概要",
+    labels: { name: "法人名", founded: "設立年月日", address: "所在地", representative: "代表者", business: "事業内容", contact: "連絡先" },
+    legalName: organizationInfo.legalName,
+    foundingDate: "2026年9月14日",
+    address: organizationInfo.streetAddress,
+    representative: "代表理事　矢野由佳",
+    businesses: [
+      "地理空間情報に関心を持つ学生・若手が、学び、交流し、協働できるコミュニティの運営",
+      "学生・若手の学習、研究、活動への助成・支援",
+      "勉強会、講演会、交流会などの企画・実施",
+      "国内外の関連団体、教育・研究機関、行政、企業との連携・協働",
+      "地理空間情報分野の普及・発展に関わる事業、および法人の目的達成に必要な事業",
+    ],
+    messageTitle: "代表者メッセージ",
+    messageHeading: "地理への興味を、将来の選択肢につなげたい",
+    messageParagraphs: [
+      "Youth GEO Japanを立ち上げた背景には、私自身が、地理という分野の広さに魅力を感じる一方で、その興味を進路やキャリアへつなげる難しさを感じてきた経験があります。",
+      "地理を学んだ先にどのような研究や仕事があるのか。自分はどの分野に進むのが合っているのか。どのような知識やスキルを身につければよいのか。地理が好きだからこそ選択肢が広く、かえって進む方向に迷うことがあります。",
+      "また、都市、防災、環境、交通、観光、国際協力、データ分析などに関心を持っていても、その関心と地理とのつながりに気づく機会は、決して多くありません。",
+      "こうした経験から、自分と地理との接点を見つけ、その先にある人や仕事を知り、実際の活動へ進んでいける場所をつくりたいと考えるようになりました。",
+      "学生同士がつながること。研究者、技術者、企業、行政などで活動する人たちと出会うこと。進学、研究、就職、イベント、コミュニティについて知ること。そして、実践的なプロジェクトを通して知識やスキル、経験を身につけること。",
+      "Youth GEO Japanを、若者の好奇心が次の一歩につながる場所にしていきたいと考えています。",
+    ],
+  },
 };

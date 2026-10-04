@@ -1,30 +1,17 @@
 import { getDictionary, type Locale } from "@/lib/i18n";
 
 export function ApproachCards({ locale }: { locale: Locale }) {
-  const { homeContent, ui } = getDictionary(locale);
+  const { homeContent, pages, ui } = getDictionary(locale);
 
   return (
-    <div className="grid gap-5 md:grid-cols-[0.85fr_1.15fr]">
-      <div className="card-soft flex min-h-64 items-center justify-center">
-        <div className="cycle" aria-label={ui.approachCycleLabel}>
-          {ui.approachSteps.map((label, index) => (
-            <span key={label} className={`cycle-step cycle-step-${index + 1}`}>
-              {label}
-            </span>
-          ))}
-          <span className="cycle-core">GEO</span>
-        </div>
-      </div>
-      <div className="grid gap-5">
-        {homeContent.approach.items.map((item, index) => (
-          <article key={item} className="card-soft">
-            <span className="mb-4 inline-grid size-10 place-items-center rounded-full bg-[#a9dbee] text-sm font-semibold text-[#3e3a39]">
-              {index + 1}
-            </span>
-            <p className="text-lg leading-8 text-[#3e3a39]">{item}</p>
-          </article>
-        ))}
-      </div>
+    <div className="approach-loop" role="group" aria-label={ui.approachCycleLabel}>
+      {homeContent.whatWeDo.cards.map((card, index) => (
+        <article key={card.title} className={`card-soft approach-node approach-node-${index + 1}`}>
+          <h3 className="text-2xl font-semibold">{card.title}</h3>
+          <p className="mt-2 font-medium text-[#6A5748]">{card.subtitle.replace(/^ー/, "")}</p>
+          <p className="mt-5 text-base leading-8 text-[#3e3a39]/76">{index === 1 ? pages.about.thinkDescription : card.description}</p>
+        </article>
+      ))}
     </div>
   );
 }

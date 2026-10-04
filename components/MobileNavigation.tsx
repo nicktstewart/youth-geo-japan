@@ -8,7 +8,8 @@ import type { Locale } from "@/lib/i18n";
 
 type MobileNavigationProps = {
   closeLabel: string;
-  contactHref: string;
+  joinHref: string;
+  joinLabel: string;
   locale: Locale;
   languageLabel: string;
   navItems: { href: string; label: string }[];
@@ -18,7 +19,8 @@ type MobileNavigationProps = {
 
 export function MobileNavigation({
   closeLabel,
-  contactHref,
+  joinHref,
+  joinLabel,
   locale,
   languageLabel,
   navItems,
@@ -58,7 +60,7 @@ export function MobileNavigation({
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <div className="relative md:hidden" ref={containerRef}>
+    <div className="relative lg:hidden" ref={containerRef}>
       <button
         aria-controls="mobile-navigation-panel"
         aria-expanded={isOpen}
@@ -89,12 +91,12 @@ export function MobileNavigation({
               </Link>
             ))}
             <Link
-              aria-current={isCurrentPage(contactHref) ? "page" : undefined}
+              aria-current={isCurrentPage(joinHref) ? "page" : undefined}
               className="mt-1 flex min-h-12 items-center rounded-xl bg-[#6bbc70] px-4 py-3 text-base font-semibold text-[#1f2d1f] transition-colors hover:bg-[#7dcc82]"
-              href={contactHref}
+              href={joinHref}
               onClick={closeMenu}
             >
-              Contact
+              {joinLabel}
             </Link>
           </nav>
           <div className="mt-2 border-t border-[#6A5748]/10 pt-2">
