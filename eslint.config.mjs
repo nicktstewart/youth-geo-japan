@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Verified third-party/static delivery artifact; linted in its source project.
     "public/hibakujumoku/**",
+    // Promo video tooling (Node/canvas scripts, not part of the site). See promo/README.md.
+    "promo/**",
   ]),
 ]);
 

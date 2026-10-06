@@ -1,0 +1,16 @@
+{
+  "name": "ygj-promo-video",
+  "private": true,
+  "description": "Source for the Youth GEO Japan promo video (canvas animation + synthesized music, rendered with headless Chrome + ffmpeg). See ../README.md.",
+  "scripts": {
+    "music": "node music.js",
+    "stills": "node render.js stills 1080 1920",
+    "stills:landscape": "node render.js stills 1920 1080",
+    "render:vertical": "node music.js && node render.js video 1080 1920 ../ygj-promo-vertical-1080x1920.mp4",
+    "render:landscape": "node music.js && node render.js video 1920 1080 ../ygj-promo-landscape-1920x1080.mp4",
+    "render": "npm run render:vertical && npm run render:landscape"
+  },
+  "dependencies": {
+    "puppeteer-core": "^23.11.1"
+  }
+}
