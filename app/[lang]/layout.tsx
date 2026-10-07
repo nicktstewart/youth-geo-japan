@@ -60,8 +60,10 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   const jsonLd = organizationJsonLd(lang, siteMeta.description);
 
   return (
-    <html lang={lang} data-scroll-behavior="smooth">
+    <html lang={lang} data-scroll-behavior="smooth" suppressHydrationWarning>
       <body>
+        {/* Opt in to load animations before first paint; without JS the page renders fully static. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

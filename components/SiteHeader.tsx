@@ -8,7 +8,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const { navItems, ui, pages } = getDictionary(locale);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#6A5748]/10 bg-[#F7F3ED]/92 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-[#6A5748]/10 bg-[#F7F3ED]/95 lg:bg-[#F7F3ED]/92 lg:backdrop-blur">
       <div className="page-shell flex min-h-[4.25rem] items-center justify-between py-2.5 sm:py-3">
         <Link
           href={localePath(locale, "/")}

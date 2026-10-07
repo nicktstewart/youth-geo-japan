@@ -39,18 +39,12 @@ export function HeroSection({ locale }: { locale: Locale }) {
           <div className="hero-logo-wrap absolute inset-4">
             <AnimatedLogo
               variant="hero"
-              delay={0.55}
+              delay={0.15}
               title="Youth GEO Japan logo"
-              className="hero-logo absolute inset-0 size-full overflow-visible drop-shadow-[0_18px_30px_rgb(106_87_72_/_0.14)]"
+              className="hero-logo absolute inset-0 size-full overflow-visible"
             />
           </div>
         </div>
-      </div>
-      <div className="hero-wipe" aria-hidden="true">
-        <span className="bg-[#3e3a39]" />
-        <span className="bg-[#a9dbee]" />
-        <span className="bg-[#6bbc70]" />
-        <span className="bg-[#f8d478]" />
       </div>
     </section>
   );
