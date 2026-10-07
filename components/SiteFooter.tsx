@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { AnimatedLogo } from "@/components/AnimatedLogo";
 import { getDictionary, localePath, type Locale } from "@/lib/i18n";
 
 export function SiteFooter({ locale }: { locale: Locale }) {
@@ -9,15 +9,9 @@ export function SiteFooter({ locale }: { locale: Locale }) {
     <footer className="border-t border-[#6A5748]/10 bg-[#3e3a39] text-white">
       <div className="page-shell grid gap-8 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <div className="flex items-center gap-3">
-            <span className="relative size-12 overflow-hidden rounded-xl bg-white/95">
-              <Image
-                src="/YGJ-logo-only.png"
-                alt=""
-                fill
-                sizes="48px"
-                className="object-contain p-1"
-              />
+          <div className="logo-link flex items-center gap-3" data-reveal="">
+            <span className="relative grid size-12 place-items-center overflow-hidden rounded-xl bg-white/95">
+              <AnimatedLogo className="size-full p-1" />
             </span>
             <p className="text-xl font-semibold">{siteMeta.name}</p>
           </div>

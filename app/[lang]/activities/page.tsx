@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { SectionHeading } from "@/components/SectionHeading";
 import { getDictionary, hasLocale, localePath } from "@/lib/i18n";
 import { createPageMetadata } from "@/lib/seo";
+import { stagger } from "@/lib/motion";
 
 type ActivitiesPageProps = { params: Promise<{ lang: string }> };
 
@@ -37,7 +38,7 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
             description={ui.activitiesPageDescription}
             as="h1"
           />
-          <div className="rounded-[1.25rem] border border-[#6A5748]/10 bg-white p-5 shadow-sm">
+          <div className="heading-intro-card rounded-[1.25rem] border border-[#6A5748]/10 bg-white p-5 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6A5748]">
               Newsletter archive
             </p>
@@ -74,7 +75,7 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
       <section className="section-pad scroll-mt-24 bg-white" id={`newsletter-${newsletter.issue.replace(".", "-")}`} key={newsletter.issue}>
         <div className="page-shell grid gap-10 lg:grid-cols-[minmax(0,1fr)_17rem] lg:gap-16">
           <article className="min-w-0">
-            <header className="border-b border-[#6A5748]/12 pb-8">
+            <header data-reveal="" className="border-b border-[#6A5748]/12 pb-8">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#6A5748]">
                 Newsletter · {newsletter.issue}
               </p>
@@ -91,11 +92,12 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
             <div className="divide-y divide-[#6A5748]/12">
               {newsletter.topics.map((topic, index) => (
                 <section
+                  data-reveal=""
                   className="grid scroll-mt-24 gap-5 py-9 sm:grid-cols-[3rem_minmax(0,1fr)]"
                   id={newsletter.issue === "2026.08" ? `topic-${index + 1}` : `topic-${newsletter.issue}-${index + 1}`}
                   key={topic.title}
                 >
-                  <span className="grid size-10 place-items-center rounded-full bg-[#F7F3ED] text-sm font-medium text-[#6A5748]">
+                  <span className="topic-num grid size-10 place-items-center rounded-full bg-[#F7F3ED] text-sm font-medium text-[#6A5748]">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <div>
@@ -130,7 +132,7 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
               ))}
             </div>
 
-            <section className="mt-2 rounded-[1.25rem] bg-[#EAF7EC] p-6 sm:p-8">
+            <section data-reveal="" className="mt-2 rounded-[1.25rem] bg-[#EAF7EC] p-6 sm:p-8">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6A5748]">
                 Coming up
               </p>
@@ -156,7 +158,7 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
           </article>
 
           <aside className="lg:sticky lg:top-28 lg:self-start">
-            <div className="rounded-[1.25rem] border border-[#6A5748]/10 bg-[#F7F3ED] p-5">
+            <div data-reveal="" className="rounded-[1.25rem] border border-[#6A5748]/10 bg-[#F7F3ED] p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6A5748]">
                 In this issue
               </p>
@@ -172,7 +174,7 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
                 ))}
               </nav>
             </div>
-            <Link className="btn-primary mt-5 w-full" href={localePath(lang, "/join")}>
+            <Link data-reveal="" style={stagger(1)} className="btn-primary mt-5 w-full" href={localePath(lang, "/join")}>
               {ui.joinActivities}
             </Link>
           </aside>

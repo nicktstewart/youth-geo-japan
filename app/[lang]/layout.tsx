@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { MotionObserver } from "@/components/MotionObserver";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getDictionary, hasLocale, locales } from "@/lib/i18n";
@@ -70,6 +71,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
         <SiteHeader locale={lang} />
         <main>{children}</main>
         <SiteFooter locale={lang} />
+        <MotionObserver />
       </body>
     </html>
   );

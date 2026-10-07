@@ -449,6 +449,566 @@ a {
   }
 }
 
+/* ==========================================================================
+   Motion system
+   Timing language borrowed from the promo video (promo/source/index.html):
+   expo-out for entrances, back-out for pops, wipes along the logo arrow angle.
+   ========================================================================== */
+
+:root {
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-back: cubic-bezier(0.34, 1.75, 0.64, 1);
+  --ease-inout: cubic-bezier(0.76, 0, 0.24, 1);
+  /* atan2(161 - 458, 612 - 20) — the logo arrow */
+  --arrow-angle: -26.6deg;
+}
+
+/* ---------- Logo build ---------- */
+
+.ygj-logo .ygj-body {
+  transform-origin: 320px 318px;
+  animation: ygj-pop 0.6s var(--ease-back) both;
+  animation-delay: var(--ygj-delay, 0s);
+}
+
+.ygj-logo .ygj-region {
+  transform-origin: 235px 345px;
+  animation: ygj-bloom 0.8s var(--ease-expo) both;
+  animation-delay: calc(var(--ygj-delay, 0s) + 0.06s + var(--i, 0) * 0.09s);
+}
+
+.ygj-logo .ygj-horizon {
+  stroke-dasharray: 1;
+  animation: ygj-draw 0.6s var(--ease-expo) both;
+  animation-delay: calc(var(--ygj-delay, 0s) + 0.3s);
+}
+
+.ygj-logo .ygj-arrow {
+  animation: ygj-shoot 0.62s var(--ease-expo) both;
+  animation-delay: calc(var(--ygj-delay, 0s) + 0.5s);
+}
+
+.ygj-logo .ygj-streaks {
+  transform-origin: 300px 330px;
+  animation: ygj-streak 0.62s ease-out both;
+  animation-delay: calc(var(--ygj-delay, 0s) + 0.5s);
+}
+
+.ygj-logo .ygj-pulse {
+  transform-origin: 320px 318px;
+  opacity: 0;
+  animation: ygj-ring 1.1s var(--ease-expo) both;
+  animation-delay: calc(var(--ygj-delay, 0s) + 0.95s);
+}
+
+/* Impact punch when the arrow lands (hero only). */
+.ygj-logo-hero {
+  animation: ygj-impact 0.5s var(--ease-expo) both;
+  animation-delay: calc(var(--ygj-delay, 0s) + 0.95s);
+}
+
+/* Header/footer mark: the arrow lunges forward on hover. */
+.logo-link:hover .ygj-arrow-inner,
+.logo-link:focus-visible .ygj-arrow-inner {
+  animation: ygj-nudge 0.7s var(--ease-expo);
+}
+
+/* Footer mark waits until it scrolls into view. */
+.motion-ready [data-reveal]:not(.is-in) .ygj-logo *,
+.motion-ready [data-reveal]:not(.is-in) .ygj-logo {
+  animation-play-state: paused;
+}
+
+@keyframes ygj-pop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+@keyframes ygj-bloom {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+@keyframes ygj-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes ygj-shoot {
+  from { transform: translate(-1251px, 628px); }
+  to { transform: translate(0, 0); }
+}
+
+@keyframes ygj-streak {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0); }
+}
+
+@keyframes ygj-ring {
+  0% { opacity: 0; transform: scale(1); }
+  4% { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.45); }
+}
+
+@keyframes ygj-impact {
+  0% { transform: scale(1.06) rotate(-1.2deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+@keyframes ygj-nudge {
+  0% { transform: translate(0, 0); }
+  35% { transform: translate(-38px, 19px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ---------- Hero ---------- */
+
+.hero-wipe {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-wipe > span {
+  position: absolute;
+  top: -150%;
+  left: -100%;
+  width: 300%;
+  height: 400%;
+  transform: rotate(var(--arrow-angle)) translateX(0);
+  animation: hero-wipe 0.62s var(--ease-inout) both;
+}
+
+.hero-wipe > span:nth-child(3) { animation-delay: 0.07s; }
+.hero-wipe > span:nth-child(2) { animation-delay: 0.14s; }
+.hero-wipe > span:nth-child(1) { animation-delay: 0.21s; }
+
+@keyframes hero-wipe {
+  to { transform: rotate(var(--arrow-angle)) translateX(100%); }
+}
+
+.mask-line {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+  vertical-align: top;
+}
+
+.mask-word {
+  display: inline-block;
+}
+
+.hero .mask-word {
+  animation: mask-up 1s var(--ease-expo) both;
+  animation-delay: calc(0.45s + var(--i, 0) * 0.09s);
+}
+
+.hero-tagline {
+  animation: rise-in 0.9s var(--ease-expo) 0.75s both;
+}
+
+.marker {
+  background-image: linear-gradient(transparent 58%, rgb(248 212 120 / 85%) 58%, rgb(248 212 120 / 85%) 92%, transparent 92%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  animation: marker-swipe 0.8s var(--ease-expo) 1.25s both;
+}
+
+.hero-cta {
+  animation: rise-in 0.9s var(--ease-expo) 0.95s both;
+}
+
+.hero-cta .btn-primary::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 rgb(107 188 112 / 55%);
+  content: "";
+  animation: cta-ping 1.6s ease-out 1.9s 2;
+  pointer-events: none;
+}
+
+.hero-logo-wrap {
+  animation: float-soft 7s ease-in-out 2s infinite;
+}
+
+.hero-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(118%, 520px);
+  aspect-ratio: 1;
+  border: 2px dashed rgb(106 87 72 / 16%);
+  border-radius: 999px;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation:
+    orbit-in 1.2s var(--ease-expo) 1.2s both,
+    spin 60s linear 1.2s infinite;
+}
+
+@media (max-width: 47.999rem) {
+  .hero-orbit {
+    width: min(64vw, 15rem);
+  }
+}
+
+.hero-orbit::before,
+.hero-orbit::after {
+  position: absolute;
+  border-radius: 999px;
+  content: "";
+}
+
+.hero-orbit::before {
+  top: 12%;
+  left: 8%;
+  width: 0.85rem;
+  height: 0.85rem;
+  background: #6bbc70;
+  box-shadow: 0 0 0 6px rgb(107 188 112 / 18%);
+}
+
+.hero-orbit::after {
+  right: 6%;
+  bottom: 18%;
+  width: 0.6rem;
+  height: 0.6rem;
+  background: #f8d478;
+  box-shadow: 0 0 0 5px rgb(248 212 120 / 22%);
+}
+
+.topo-line {
+  stroke-dasharray: 1;
+  animation: topo-draw 2.2s var(--ease-expo) both;
+}
+
+.topo-spin {
+  animation: spin 160s linear infinite;
+}
+
+.topo-spin-reverse {
+  animation: spin 200s linear infinite reverse;
+}
+
+@keyframes mask-up {
+  from { transform: translateY(110%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes marker-swipe {
+  from { background-size: 0% 100%; }
+  to { background-size: 100% 100%; }
+}
+
+@keyframes cta-ping {
+  0% { box-shadow: 0 0 0 0 rgb(107 188 112 / 55%); }
+  100% { box-shadow: 0 0 0 18px rgb(107 188 112 / 0%); }
+}
+
+@keyframes orbit-in {
+  from { opacity: 0; scale: 0.6; }
+  to { opacity: 1; scale: 1; }
+}
+
+@keyframes spin {
+  to { rotate: 360deg; }
+}
+
+@keyframes topo-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes float-soft {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+
+/* ---------- Page intros (h1 headings animate on load) ---------- */
+
+.heading-intro .eyebrow,
+.heading-intro-body,
+.heading-intro-card {
+  animation: rise-in 0.8s var(--ease-expo) both;
+}
+
+.heading-intro .eyebrow { animation-delay: 0.05s; }
+.heading-intro .mask-word { animation: mask-up 0.95s var(--ease-expo) 0.12s both; }
+.heading-intro .heading-desc { animation: rise-in 0.8s var(--ease-expo) 0.3s both; }
+.heading-intro .eyebrow-bar { animation: bar-grow 0.7s var(--ease-expo) 0.2s both; }
+.heading-intro-body { animation-delay: 0.32s; }
+.heading-intro-card { animation-delay: 0.4s; }
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.text-center .eyebrow {
+  justify-content: center;
+}
+
+.eyebrow-bar {
+  display: inline-block;
+  width: 1.75rem;
+  height: 0.4rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #a9dbee, #6bbc70 55%, #f8d478);
+  transform-origin: left center;
+}
+
+@keyframes bar-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* ---------- Scroll reveals (see components/MotionObserver.tsx) ---------- */
+
+.motion-ready [data-reveal]:not(.is-in) {
+  opacity: 0;
+}
+
+.motion-ready .heading-reveal:not(.is-in) {
+  opacity: 1;
+}
+
+.motion-ready .heading-reveal:not(.is-in) .mask-word {
+  transform: translateY(110%);
+}
+
+.motion-ready .heading-reveal:not(.is-in) .eyebrow,
+.motion-ready .heading-reveal:not(.is-in) .heading-desc {
+  opacity: 0;
+}
+
+.reveal-play {
+  animation: reveal-up 0.9s var(--ease-expo) both;
+  animation-delay: calc(var(--i, 0) * 0.09s);
+}
+
+.reveal-play.heading-reveal {
+  animation: none;
+}
+
+.reveal-play.heading-reveal .eyebrow { animation: rise-in 0.7s var(--ease-expo) both; }
+.reveal-play.heading-reveal .eyebrow-bar { animation: bar-grow 0.7s var(--ease-expo) 0.15s both; }
+.reveal-play.heading-reveal .mask-word { animation: mask-up 0.95s var(--ease-expo) 0.08s both; }
+.reveal-play.heading-reveal .heading-desc { animation: rise-in 0.8s var(--ease-expo) 0.25s both; }
+
+.reveal-play.tag-pop {
+  animation: pop-in 0.6s var(--ease-back) both;
+  animation-delay: calc(var(--i, 0) * 0.06s);
+}
+
+.reveal-play.reveal-slide {
+  animation: slide-in 0.9s var(--ease-expo) both;
+}
+
+.reveal-play .topic-num {
+  animation: pop-in 0.6s var(--ease-back) 0.15s both;
+}
+
+@keyframes reveal-up {
+  from { opacity: 0; translate: 0 36px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+@keyframes pop-in {
+  from { opacity: 0; scale: 0.6; }
+  to { opacity: 1; scale: 1; }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; translate: -40px 0; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+/* ---------- Interaction ---------- */
+
+.btn-primary {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Sheen that sweeps along the arrow angle on hover. */
+.btn-primary::after,
+.card-hover::after {
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  z-index: -1;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 45%), transparent);
+  content: "";
+  transform: rotate(calc(90deg + var(--arrow-angle))) translateY(0);
+  translate: 0 0;
+  transition: translate 0s;
+  pointer-events: none;
+}
+
+.btn-primary:hover::after,
+.card-hover:hover::after {
+  translate: 420% 0;
+  transition: translate 0.75s var(--ease-expo);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 16px 34px rgb(107 188 112 / 34%);
+}
+
+.btn-arrow-icon {
+  display: inline-block;
+  margin-left: 0.55rem;
+  transition: translate 0.35s var(--ease-expo);
+}
+
+.btn-arrow:hover .btn-arrow-icon {
+  translate: 5px -2px;
+}
+
+.card-hover {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.card-hover::after {
+  background: linear-gradient(90deg, transparent, rgb(169 219 238 / 22%), transparent);
+}
+
+.card-hover::before,
+.card-lift::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #a9dbee, #6bbc70, #f8d478);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease-expo);
+}
+
+.card-hover:hover::before,
+.card-lift:hover::before {
+  transform: scaleX(1);
+}
+
+.card-lift {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.35s var(--ease-expo),
+    box-shadow 0.35s var(--ease-expo);
+}
+
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 46px rgb(106 87 72 / 12%);
+}
+
+.approach-node.card-lift {
+  overflow: visible;
+}
+
+.approach-node.card-lift::before {
+  border-radius: 1.25rem 1.25rem 0 0;
+}
+
+.approach-node::after {
+  animation: nudge-pulse 2.4s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.3s);
+}
+
+@keyframes nudge-pulse {
+  0%, 100% { opacity: 0.55; scale: 1; }
+  50% { opacity: 1; scale: 1.25; }
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.3rem;
+  left: 0.75rem;
+  height: 2px;
+  border-radius: 999px;
+  background: #6bbc70;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s var(--ease-expo);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.scroll-progress {
+  display: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #a9dbee, #6bbc70 50%, #f8d478);
+    transform-origin: left;
+    animation: bar-grow linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+.join-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.join-card::before {
+  position: absolute;
+  top: -30%;
+  right: -12%;
+  width: 26rem;
+  height: 26rem;
+  border-radius: 999px;
+  background:
+    repeating-radial-gradient(circle, transparent 0 22px, rgb(106 87 72 / 7%) 23px 24px),
+    radial-gradient(circle, rgb(169 219 238 / 35%), transparent 65%);
+  content: "";
+  animation: spin 90s linear infinite;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-wipe {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
