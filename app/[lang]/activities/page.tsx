@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArticleShare } from "@/components/ArticleShare";
 import { SectionHeading } from "@/components/SectionHeading";
 import { getDictionary, hasLocale, localePath } from "@/lib/i18n";
 import { createPageMetadata } from "@/lib/seo";
-import { stagger } from "@/lib/motion";
 
 type ActivitiesPageProps = { params: Promise<{ lang: string }> };
 
@@ -28,6 +28,26 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
   if (!hasLocale(lang)) notFound();
   const { activities, newsletters, ui } = getDictionary(lang);
 
+  const announcement = lang === "ja" ? {
+    title: "Podcast「GEO Meetup!」を公開しました！",
+    lead: "Youth GEO Japanで、Podcast「GEO Meetup!」を始めました！地理が好きなメンバーの興味や経験を入り口に、いろいろな地理の話をお届けしていきます。第1回のテーマは「私たちはどうして地理が好きなのか」。地理に出会ったきっかけや、地理を学んだ先のキャリアについて語り合いました。",
+    episode: "#01｜私たちはどうして地理が好きなのか",
+    listen: "Podcastを聴く",
+    read: "Podcastの話をnoteで読む",
+    summary: "noteでは、Podcastで話したことを記事にまとめています。音声を聴く時間がない方も、話のポイントを文章で読めます。",
+    noteLink: "noteで第1回の記事を読む",
+    spotifyLink: "Spotifyで聴く", appleLink: "Apple Podcastsで聴く",
+  } : {
+    title: "Our GEO Meetup! podcast is now live!",
+    lead: "We’ve started GEO Meetup!, Youth GEO Japan’s podcast! We’ll explore geography through our members’ interests and experiences. Episode 1 asks why we love geography, sharing how we discovered it and where studying it can lead in our careers.",
+    episode: "#01 | Why do we love geography?",
+    listen: "Listen to the podcast",
+    read: "Read the conversation on note",
+    summary: "We’ve written up the podcast conversation in a Japanese article on note. If you do not have time to listen, you can read the key points instead.",
+    noteLink: "Read the episode 1 article on note (Japanese)",
+    spotifyLink: "Listen on Spotify", appleLink: "Listen on Apple Podcasts",
+  };
+
   return (
     <>
       <section className="section-pad bg-[#F7F3ED]">
@@ -40,10 +60,14 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
           />
           <div className="heading-intro-card rounded-[1.25rem] border border-[#6A5748]/10 bg-white p-5 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6A5748]">
-              Newsletter archive
+              Activity archive
             </p>
             <h2 className="mt-2 text-lg font-semibold text-[#3e3a39]">{ui.articleList}</h2>
             <div className="mt-4 grid gap-2">
+              <a href="#geo-meetup-launch" className="group flex items-center justify-between gap-4 rounded-xl bg-[#EAF7EC] px-4 py-3 transition hover:bg-[#ddf0df]">
+                <span className="text-sm font-medium text-[#3e3a39]">{announcement.title}</span>
+                <span aria-hidden="true" className="text-lg text-[#6A5748]">→</span>
+              </a>
               {activities.map((activity) =>
                 activity.link ? (
                   <a
@@ -71,10 +95,46 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
         </div>
       </section>
 
+      <section id="geo-meetup-launch" className="section-pad scroll-mt-24 bg-white">
+        <article className="page-shell">
+          <div className="max-w-3xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#6A5748]">Podcast &amp; note</p>
+            <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-[-0.025em] text-[#3e3a39] sm:text-4xl">{announcement.title}</h2>
+            <ArticleShare title={announcement.title} href={`${localePath(lang, "/activities")}#geo-meetup-launch`} locale={lang} />
+            <p className="mt-6 text-base leading-8 text-[#3e3a39]/76">{announcement.lead}</p>
+          </div>
+          <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-12">
+            <section className="min-w-0" aria-labelledby="podcast-listen">
+              <h3 id="podcast-listen" className="text-xl font-semibold text-[#3e3a39]">{announcement.listen}</h3>
+              <p className="mt-2 text-sm leading-6 text-[#6A5748]">{announcement.episode}</p>
+              <iframe
+                className="mt-5 w-full rounded-xl border-0"
+                src="https://open.spotify.com/embed/episode/4POThApspZGp1tzryDtwWi"
+                title={`GEO Meetup! — ${announcement.episode}`}
+                height="232"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+              <div className="mt-4 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-[#6A5748]">
+                <a className="underline underline-offset-4" href="https://open.spotify.com/episode/4POThApspZGp1tzryDtwWi">{announcement.spotifyLink} <span aria-hidden="true">↗</span></a>
+                <a className="underline underline-offset-4" href="https://podcasts.apple.com/us/podcast/geo-meetup/id6819559320">{announcement.appleLink} <span aria-hidden="true">↗</span></a>
+              </div>
+            </section>
+            <section className="border-t border-[#6A5748]/20 pt-8 lg:border-t-0 lg:border-l lg:pl-10 lg:pt-0" aria-labelledby="podcast-summary">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6A5748]">note</p>
+              <h3 id="podcast-summary" className="mt-3 text-xl font-semibold text-[#3e3a39]">{announcement.read}</h3>
+              <p className="mt-4 text-base leading-8 text-[#3e3a39]/76">{announcement.summary}</p>
+              <a className="mt-5 inline-block text-sm font-semibold leading-7 text-[#6A5748] underline underline-offset-4" href="https://note.com/youth_geo_japan/n/nec7677d1cb59">{announcement.noteLink} <span aria-hidden="true">↗</span></a>
+            </section>
+          </div>
+        </article>
+      </section>
+
       {newsletters.map((newsletter) => (
-      <section className="section-pad scroll-mt-24 bg-white" id={`newsletter-${newsletter.issue.replace(".", "-")}`} key={newsletter.issue}>
-        <div className="page-shell grid gap-10 lg:grid-cols-[minmax(0,1fr)_17rem] lg:gap-16">
-          <article className="min-w-0">
+      <section className="section-pad mt-4 scroll-mt-24 border-t-8 border-[#e6ded2] bg-white sm:mt-6" id={`newsletter-${newsletter.issue.replace(".", "-")}`} key={newsletter.issue}>
+        <div className="page-shell">
+          <article className="mx-auto min-w-0 max-w-4xl">
             <header data-reveal="" className="border-b border-[#6A5748]/12 pb-8">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#6A5748]">
                 Newsletter · {newsletter.issue}
@@ -82,6 +142,7 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
               <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-[-0.025em] text-[#3e3a39] sm:text-4xl">
                 {newsletter.title}
               </h2>
+              <ArticleShare title={newsletter.title} href={`${localePath(lang, "/activities")}#newsletter-${newsletter.issue.replace(".", "-")}`} locale={lang} />
               <div className="mt-6 space-y-3 text-base leading-8 text-[#3e3a39]/76">
                 {newsletter.lead.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
@@ -154,30 +215,11 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
                 {newsletter.closing.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                 <Link className="btn-secondary mt-3" href={localePath(lang, "/join")}>{ui.joinActivities}</Link>
               </div>
-            ) : null}
+            ) : (
+              <Link className="btn-primary mt-8" href={localePath(lang, "/join")}>{ui.joinActivities}</Link>
+            )}
           </article>
 
-          <aside className="lg:sticky lg:top-28 lg:self-start">
-            <div data-reveal="" className="rounded-[1.25rem] border border-[#6A5748]/10 bg-[#F7F3ED] p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6A5748]">
-                In this issue
-              </p>
-              <nav className="mt-4 grid gap-1" aria-label={`${newsletter.issue} · ${ui.issueContents}`}>
-                {newsletter.topics.map((topic, index) => (
-                  <a
-                    className="rounded-lg px-3 py-2 text-sm leading-6 text-[#3e3a39]/72 transition hover:bg-white hover:text-[#3e3a39]"
-                    href={newsletter.issue === "2026.08" ? `#topic-${index + 1}` : `#topic-${newsletter.issue}-${index + 1}`}
-                    key={topic.title}
-                  >
-                    {index + 1}. {topic.title}
-                  </a>
-                ))}
-              </nav>
-            </div>
-            <Link data-reveal="" style={stagger(1)} className="btn-primary mt-5 w-full" href={localePath(lang, "/join")}>
-              {ui.joinActivities}
-            </Link>
-          </aside>
         </div>
       </section>
       ))}
