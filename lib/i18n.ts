@@ -47,7 +47,7 @@ const ja = {
     joinActivities: "活動に参加する",
     activitiesPageTitle: "活動の記録",
     activitiesPageDescription:
-      "勉強会やイベント、メンバー同士の交流など、Youth GEO Japanの歩みを月ごとにお届けします。",
+      "勉強会やイベント、メンバー同士の交流、Podcast・noteの公開情報など、Youth GEO Japanの活動をお届けします。",
     articleList: "記事一覧",
     issueContents: "この号の目次",
     upcoming: "今後の予定",
@@ -224,7 +224,7 @@ const en = {
   },
   augustNewsletter: {
     issue: "2026.08",
-    title: "Youth GEO Japan Newsletter",
+    title: "Youth GEO Japan Newsletter — August 2026",
     lead: [
       "Hello from Youth GEO Japan. We are a community of young people interested in geospatial information who share opportunities to learn and take on new challenges.",
       "In our August issue, we look back at recent meetings, study sessions, events, and exchanges among our members.",
@@ -333,8 +333,8 @@ const en = {
     joinActivities: "Join our activities",
     activitiesPageTitle: "Activity journal",
     activitiesPageDescription:
-      "Follow Youth GEO Japan’s journey through our study sessions, events, and community gatherings.",
-    articleList: "Issues",
+      "Follow Youth GEO Japan’s study sessions, events, community gatherings, and podcast and note releases.",
+    articleList: "Articles",
     issueContents: "Contents of this issue",
     upcoming: "What’s next",
     partnersTitle: "Building pathways from geographic curiosity—together",

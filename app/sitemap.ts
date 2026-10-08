@@ -7,7 +7,7 @@ type IndexableRoute = (typeof indexableRoutes)[number];
 const routeLastModified = {
   "/": "2026-10-04T00:00:00+09:00",
   "/about": "2026-10-04T00:00:00+09:00",
-  "/activities": "2026-10-04T00:00:00+09:00",
+  "/activities": "2026-10-08T00:00:00+09:00",
   "/partners": "2026-10-04T00:00:00+09:00",
   "/join": "2026-10-04T00:00:00+09:00",
   "/organization": "2026-10-04T00:00:00+09:00",

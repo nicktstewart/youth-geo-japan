@@ -198,7 +198,7 @@ export const septemberNewsletter: Newsletter = {
 
 export const augustNewsletter: Newsletter = {
   issue: "2026.08",
-  title: "Youth GEO Japan ニュースレター",
+  title: "Youth GEO Japan ニュースレター 2026年8月号",
   lead: [
     "こんにちは、Youth GEO Japanです。私たちは、地理空間情報に興味のある若者が集まり、学びや挑戦を共有するコミュニティです。",
     "8月号では、最近のミーティングや勉強会、イベント参加、メンバー同士の交流についてお届けします。",
