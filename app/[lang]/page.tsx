@@ -6,6 +6,7 @@ import { JoinUsSection } from "@/components/JoinUsSection";
 import { SectionHeading } from "@/components/SectionHeading";
 import { getDictionary, hasLocale, localePath } from "@/lib/i18n";
 import { createPageMetadata } from "@/lib/seo";
+import { stagger } from "@/lib/motion";
 
 type HomeProps = { params: Promise<{ lang: string }> };
 
@@ -35,7 +36,7 @@ export default async function Home({ params }: HomeProps) {
 
       <div className="bg-white py-6 sm:py-8">
         <div className="page-shell">
-          <p className="mx-auto max-w-5xl border-l-3 border-[#6bbc70] pl-5 text-base leading-[1.85] text-[#3e3a39]/85 sm:pl-6 sm:text-[1.0625rem]">{siteMeta.description}</p>
+          <p data-reveal="" className="reveal-slide mx-auto max-w-5xl border-l-3 border-[#6bbc70] pl-5 text-base leading-[1.85] text-[#3e3a39]/85 sm:pl-6 sm:text-[1.0625rem]">{siteMeta.description}</p>
         </div>
       </div>
 
@@ -43,12 +44,12 @@ export default async function Home({ params }: HomeProps) {
         <div className="page-shell">
           <SectionHeading eyebrow="ACTIVITIES" title={pages.activityTitle} />
           <div className="mt-6 flex flex-wrap gap-2">
-            {pages.activityTags.map((tag) => <span key={tag} className="rounded-full border border-[#6A5748]/10 bg-[#F7F3ED] px-3 py-1 text-base">{tag}</span>)}
+            {pages.activityTags.map((tag, index) => <span key={tag} data-reveal="" style={stagger(index)} className="tag-pop rounded-full border border-[#6A5748]/10 bg-[#F7F3ED] px-3 py-1 text-base">{tag}</span>)}
           </div>
-          <p className="mb-4 mt-9 text-xs font-semibold tracking-[0.16em] text-[#6A5748]">LATEST NEWS</p>
+          <p data-reveal="" className="mb-4 mt-9 text-xs font-semibold tracking-[0.16em] text-[#6A5748]">LATEST NEWS</p>
           <div className="grid gap-4">
-            {activities.slice(0, 3).map((activity) => (
-              <Link key={activity.title} className="card-hover flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-8"
+            {activities.slice(0, 3).map((activity, index) => (
+              <Link key={activity.title} data-reveal="" style={stagger(index)} className="card-hover flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-8"
                 href={localePath(lang, `/activities${activity.link?.startsWith("#") ? activity.link : ""}`)}>
                 <span className="shrink-0 text-sm font-semibold text-[#6A5748]">{activity.date}</span>
                 <div><h3 className="text-xl font-semibold">{activity.title} <span aria-hidden="true">→</span></h3>
@@ -57,7 +58,7 @@ export default async function Home({ params }: HomeProps) {
               </Link>
             ))}
           </div>
-          <Link className="btn-secondary mt-7" href={localePath(lang, "/activities")}>
+          <Link data-reveal="" className="btn-secondary mt-7" href={localePath(lang, "/activities")}>
             {pages.moreActivities} <span className="ml-2" aria-hidden="true">→</span>
           </Link>
         </div>

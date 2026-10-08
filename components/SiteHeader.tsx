@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { AnimatedLogo } from "@/components/AnimatedLogo";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { MobileNavigation } from "@/components/MobileNavigation";
 import { getDictionary, localePath, type Locale } from "@/lib/i18n";
@@ -8,22 +8,15 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const { navItems, ui, pages } = getDictionary(locale);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#6A5748]/10 bg-[#F7F3ED]/92 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-[#6A5748]/10 bg-[#F7F3ED]/95 lg:bg-[#F7F3ED]/92 lg:backdrop-blur">
       <div className="page-shell flex min-h-[4.25rem] items-center justify-between py-2.5 sm:py-3">
         <Link
           href={localePath(locale, "/")}
-          className="flex min-w-0 items-center gap-2.5 font-semibold text-[#3e3a39] sm:gap-3"
+          className="logo-link flex min-w-0 items-center gap-2.5 font-semibold text-[#3e3a39] sm:gap-3"
           aria-label="Youth GEO Japan home"
         >
-          <span className="relative size-11 overflow-hidden rounded-xl border border-[#6A5748]/15 bg-white shadow-sm">
-            <Image
-              src="/YGJ-logo-only.png"
-              alt=""
-              fill
-              sizes="44px"
-              className="object-contain p-1"
-              loading="eager"
-            />
+          <span className="relative grid size-11 place-items-center overflow-hidden rounded-xl border border-[#6A5748]/15 bg-white shadow-sm">
+            <AnimatedLogo className="size-full p-1" delay={0.1} />
           </span>
           <span className="truncate text-sm sm:text-base">Youth GEO Japan</span>
         </Link>
@@ -33,7 +26,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             <Link
               key={item.href}
               href={localePath(locale, item.href)}
-              className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-[#3e3a39]/78 transition hover:bg-white hover:text-[#3e3a39]"
+              className="nav-link whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-[#3e3a39]/78 transition hover:bg-white hover:text-[#3e3a39]"
             >
               {item.label}
             </Link>
@@ -63,6 +56,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           openLabel={ui.openNavigation}
         />
       </div>
+      <div className="scroll-progress" aria-hidden="true" />
     </header>
   );
 }

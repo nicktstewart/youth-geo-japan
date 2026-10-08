@@ -37,10 +37,10 @@ export default async function PartnersPage({ params }: PartnersPageProps) {
               as="h1"
               title={pages.partners.title}
             />
-            <div className="mt-6 max-w-3xl space-y-4 text-lg leading-8 text-[#3e3a39]/78">
+            <div className="heading-intro-body mt-6 max-w-3xl space-y-4 text-lg leading-8 text-[#3e3a39]/78">
               {pages.partners.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </div>
-            <a className="btn-primary mt-8" href={`mailto:${contactInfo.email}`}>
+            <a className="heading-intro-body btn-primary mt-8" href={`mailto:${contactInfo.email}`}>
               {ui.partnerContact}
             </a>
             <p className="mt-4"><a className="break-all text-[#6A5748] hover:underline" href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a></p>
@@ -52,8 +52,8 @@ export default async function PartnersPage({ params }: PartnersPageProps) {
         <div className="page-shell">
           <SectionHeading eyebrow="Collaboration" title={ui.collaborationMenu} />
           <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {partnerOptions.map((option) => (
-              <PartnerOptionCard key={option.title} {...option} />
+            {partnerOptions.map((option, index) => (
+              <PartnerOptionCard key={option.title} index={index} {...option} />
             ))}
           </div>
         </div>

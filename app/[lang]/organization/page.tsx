@@ -4,6 +4,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { getDictionary, hasLocale } from "@/lib/i18n";
 import { organizationInfo } from "@/lib/site-content";
 import { createPageMetadata } from "@/lib/seo";
+import { stagger } from "@/lib/motion";
 
 type Props = { params: Promise<{ lang: string }> };
 
@@ -36,7 +37,7 @@ export default async function OrganizationPage({ params }: Props) {
         <div className="mx-auto max-w-4xl">
           <SectionHeading eyebrow="CORPORATE PROFILE" title={content.profileTitle} />
           <dl className="mt-8 divide-y divide-[#6A5748]/15">
-            {rows.map((row) => <div className="grid gap-2 py-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-6" key={row.label}>
+            {rows.map((row, index) => <div data-reveal="" style={stagger(index)} className="grid gap-2 py-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-6" key={row.label}>
               <dt className="font-semibold">{row.label}</dt><dd className="text-base leading-8 text-[#3e3a39]/78">{row.value}</dd>
             </div>)}
           </dl>
@@ -45,8 +46,8 @@ export default async function OrganizationPage({ params }: Props) {
       <section className="section-pad bg-white"><div className="page-shell">
         <div className="mx-auto max-w-4xl">
           <SectionHeading eyebrow="MESSAGE" title={content.messageTitle} />
-          <h3 className="mt-7 text-2xl font-semibold leading-9">{content.messageHeading}</h3>
-          <div className="mt-7 space-y-5 text-lg leading-9 text-[#3e3a39]/80">
+          <h3 data-reveal="" className="mt-7 text-2xl font-semibold leading-9">{content.messageHeading}</h3>
+          <div data-reveal="" className="mt-7 space-y-5 text-lg leading-9 text-[#3e3a39]/80">
             {content.messageParagraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
           </div>
           <p className="mt-8 text-right font-medium">{content.representative}</p>

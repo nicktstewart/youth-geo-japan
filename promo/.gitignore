@@ -1,0 +1,8 @@
+# Generated while working on the video — reproducible from source/
+source/node_modules/
+source/stills/
+source/music.wav
+source/out-*.mp4
+
+# Final renders are not committed (~50 MB each) — rebuild with `cd source && npm install && npm run render`
+*.mp4

@@ -8,7 +8,7 @@ export function JoinUsSection({ locale }: { locale: Locale }) {
   return (
     <section className="section-pad bg-[#F7F3ED]">
       <div className="page-shell">
-        <article className="card-soft overflow-hidden bg-white">
+        <article data-reveal="" className="card-soft join-card relative overflow-hidden bg-white">
           <div className="max-w-4xl">
             <div>
               <SectionHeading
@@ -20,8 +20,9 @@ export function JoinUsSection({ locale }: { locale: Locale }) {
                 {pdfSupplementContent.join.body}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link className="btn-primary" href={localePath(locale, "/join")}>
+                <Link className="btn-primary btn-arrow" href={localePath(locale, "/join")}>
                   {pages.joinLabel}
+                  <span className="btn-arrow-icon" aria-hidden="true">→</span>
                 </Link>
               </div>
             </div>

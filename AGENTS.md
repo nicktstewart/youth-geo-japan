@@ -19,3 +19,7 @@ Before changing user-visible content, page routes, navigation, metadata, or orga
 - New public pages must be added to `indexableRoutes` in `lib/seo.ts`, `routeLastModified` in `app/sitemap.ts`, bilingual metadata, hreflang/canonical handling, and crawlable internal navigation.
 - Keep visible content, page metadata, JSON-LD, sitemap, robots rules, and social preview information consistent.
 - Run `npm run lint` and `npm run build` after SEO- or content-related changes.
+
+## Promo video
+
+- The promo video and its source live in `promo/`. Before editing or re-rendering the video, read `promo/README.md` (pipeline, storyboard, beat-sync rules, editing recipes).
