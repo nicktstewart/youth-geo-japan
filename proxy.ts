@@ -64,6 +64,7 @@ export const config = {
     "/contact/:path*",
     "/join/:path*",
     "/organization/:path*",
+    "/legal/:path*",
     "/ja/:path*",
     "/en/:path*",
     "/hibakujumoku/:path*",

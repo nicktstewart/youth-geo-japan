@@ -29,6 +29,12 @@ export function SiteFooter({ locale }: { locale: Locale }) {
               {item.href === "/organization" && locale === "ja" ? "Organization / 法人情報" : item.label}
             </Link>
           ))}
+          <Link
+            href={localePath(locale, "/legal")}
+            className="flex min-h-11 items-center text-white/72 hover:text-white"
+          >
+            {locale === "ja" ? "特定商取引法に基づく表記" : "Legal disclosure"}
+          </Link>
         </nav>
         <div className="text-sm leading-7 text-white/72">
           <a className="inline-flex min-h-11 items-center hover:text-white" href={`mailto:${contactInfo.email}`}>

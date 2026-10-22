@@ -11,6 +11,7 @@ const routeLastModified = {
   "/partners": "2026-10-04T00:00:00+09:00",
   "/join": "2026-10-04T00:00:00+09:00",
   "/organization": "2026-10-04T00:00:00+09:00",
+  "/legal": "2026-10-22T00:00:00+09:00",
 } satisfies Record<IndexableRoute, string>;
 
 export default function sitemap(): MetadataRoute.Sitemap {

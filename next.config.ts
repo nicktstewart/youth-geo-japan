@@ -26,6 +26,7 @@ const nextConfig: NextConfig = {
       { source: "/contact/:path*", headers: languageNegotiationHeaders },
       { source: "/join/:path*", headers: languageNegotiationHeaders },
       { source: "/organization/:path*", headers: languageNegotiationHeaders },
+      { source: "/legal/:path*", headers: languageNegotiationHeaders },
       {
         source: "/hibakujumoku/:path*",
         headers: [
