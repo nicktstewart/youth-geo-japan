@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { MapConductorArticle } from "@/components/MapConductorArticle";
 import { ArticleShare } from "@/components/ArticleShare";
 import { SectionHeading } from "@/components/SectionHeading";
 import { getDictionary, hasLocale, localePath } from "@/lib/i18n";
 import { createPageMetadata } from "@/lib/seo";
+
+import { mapConductorArticle } from "@/lib/activity-articles";
 
 type ActivitiesPageProps = { params: Promise<{ lang: string }> };
 
@@ -51,7 +54,7 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
   return (
     <>
       <section className="section-pad bg-[#F7F3ED]">
-        <div className="page-shell grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
+        <div className="page-shell grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:items-start">
           <SectionHeading
             eyebrow="Activities"
             title={ui.activitiesPageTitle}
@@ -64,8 +67,13 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
             </p>
             <h2 className="mt-2 text-lg font-semibold text-[#3e3a39]">{ui.articleList}</h2>
             <div className="mt-4 grid gap-2">
+              <Link href="#mapconductor-workshop" className="rounded-xl bg-[#EAF7EC] p-4 transition hover:bg-[#ddf0df]">
+                <p className="text-xs text-[#6A5748]"><span className="mr-3 font-semibold">{mapConductorArticle[lang].category}</span><time dateTime={mapConductorArticle.published}>2026.10.28</time></p>
+                <h3 className="mt-2 text-base font-semibold">{mapConductorArticle[lang].title} →</h3>
+                <p className="mt-2 text-sm leading-7 text-[#3e3a39]/76">{mapConductorArticle[lang].description}</p>
+              </Link>
               <a href="#geo-meetup-launch" className="group flex items-center justify-between gap-4 rounded-xl bg-[#EAF7EC] px-4 py-3 transition hover:bg-[#ddf0df]">
-                <span className="text-sm font-medium text-[#3e3a39]">{announcement.title}</span>
+                <span><span className="block text-xs font-semibold text-[#6A5748]">{lang === "ja" ? "お知らせ · Podcast" : "News · Podcast"}</span><span className="mt-2 block text-sm font-medium text-[#3e3a39]">{announcement.title}</span><span className="mt-2 block text-sm leading-7 text-[#3e3a39]/76">{announcement.summary}</span></span>
                 <span aria-hidden="true" className="text-lg text-[#6A5748]">→</span>
               </a>
               {activities.map((activity) =>
@@ -76,10 +84,10 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
                     key={activity.title}
                   >
                     <span>
-                      <span className="block text-xs text-[#6A5748]">{activity.date}</span>
+                      <span className="block text-xs text-[#6A5748]">{activity.category} · {activity.date}</span>
                       <span className="mt-1 block text-sm font-medium text-[#3e3a39]">
                         {activity.title}
-                      </span>
+                      </span><span className="mt-2 block text-sm leading-7 text-[#3e3a39]/76">{activity.description}</span>
                     </span>
                     <span
                       className="text-lg text-[#6A5748] transition group-hover:translate-x-0.5"
@@ -94,6 +102,8 @@ export default async function ActivitiesPage({ params }: ActivitiesPageProps) {
           </div>
         </div>
       </section>
+
+      <MapConductorArticle locale={lang} embedded />
 
       <section id="geo-meetup-launch" className="section-pad scroll-mt-24 bg-white">
         <article className="page-shell">

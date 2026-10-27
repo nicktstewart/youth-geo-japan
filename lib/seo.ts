@@ -7,7 +7,7 @@ const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://youthgeoj
 export const siteUrl = new URL(configuredSiteUrl);
 export const siteOrigin = siteUrl.origin;
 
-export const indexableRoutes = ["/", "/about", "/activities", "/partners", "/join", "/organization", "/legal"] as const;
+export const indexableRoutes = ["/", "/about", "/activities", "/activities/mapconductor-web-map-hands-on", "/partners", "/join", "/organization", "/legal"] as const;
 
 export function localizedUrl(locale: Locale, pathname: string) {
   const path = pathname === "/" ? "" : pathname;

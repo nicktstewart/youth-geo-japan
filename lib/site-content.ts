@@ -97,7 +97,8 @@ export const activityCategories = [
 
 export type ActivityCategory =
   | (typeof activityCategories)[number]
-  | "その他";
+  | "その他"
+  | "ニュースレター";
 
 export type Activity = {
   title: string;
@@ -112,14 +113,14 @@ export const activities: Activity[] = [
   {
     title: "2026年9月 ニュースレター",
     date: "2026.09",
-    category: "その他",
+    category: "ニュースレター",
     description: "一般社団法人の設立、FOSS4Gへの参加、被爆樹木マップ、ハンズオンイベントの予定、渋谷での交流をお届けします。",
     link: "#newsletter-2026-09",
   },
   {
     title: "2026年8月 ニュースレター",
     date: "2026.08",
-    category: "その他",
+    category: "ニュースレター",
     description:
       "コンテストに向けたミーティング、イベント参加、LT会、交流の様子をまとめました。",
     link: "#newsletter-2026-08",
@@ -335,7 +336,7 @@ export const pageContent = {
       "そして、“地理”という現代社会の鍵を握る視点を通して、若者がリーダーシップを発揮し、社会へポジティブな変化をもたらすことを目指しています。",
     ],
   },
-  activityTitle: "活動報告",
+  activityTitle: "活動",
   activityTags: ["勉強会", "LT会", "フィールドワーク", "就職相談", "対面交流会", "ビジネスコンテストへの参加"],
   moreActivities: "活動をもっと見る",
   about: {

@@ -45,7 +45,7 @@ const ja = {
     heroLabel: "日本の若者が地理・GIS・地理空間情報を学ぶコミュニティ",
     viewActivities: "活動を見る",
     joinActivities: "活動に参加する",
-    activitiesPageTitle: "活動の記録",
+    activitiesPageTitle: "活動",
     activitiesPageDescription:
       "勉強会やイベント、メンバー同士の交流、Podcast・noteの公開情報など、Youth GEO Japanの活動をお届けします。",
     articleList: "記事一覧",
@@ -155,14 +155,14 @@ const en = {
     {
       title: "September 2026 Newsletter",
       date: "2026.09",
-      category: "Other",
+      category: "Newsletter",
       description: "Our incorporation, FOSS4G participation, an atomic-bomb-survivor tree map, an upcoming hands-on event, and a meetup in Shibuya.",
       link: "#newsletter-2026-09",
     },
     {
       title: "August 2026 Newsletter",
       date: "2026.08",
-      category: "Other",
+      category: "Newsletter",
       description:
         "A recap of our competition meetings, event participation, lightning talks, and community gatherings.",
       link: "#newsletter-2026-08",
@@ -331,7 +331,7 @@ const en = {
     heroLabel: "Japan’s youth community for geography, GIS, and geospatial learning",
     viewActivities: "View activities",
     joinActivities: "Join our activities",
-    activitiesPageTitle: "Activity journal",
+    activitiesPageTitle: "Activities",
     activitiesPageDescription:
       "Follow Youth GEO Japan’s study sessions, events, community gatherings, and podcast and note releases.",
     articleList: "Articles",
@@ -374,7 +374,7 @@ const englishPageContent: typeof pageContent = {
       "Through geography—a perspective that holds a key to understanding today’s world—we aim to empower young people to exercise leadership and create positive change in society.",
     ],
   },
-  activityTitle: "Activity reports",
+  activityTitle: "Activities",
   activityTags: ["Study sessions", "Lightning talks", "Fieldwork", "Career advice", "In-person meetups", "Business competitions"],
   moreActivities: "View more activities",
   about: {
